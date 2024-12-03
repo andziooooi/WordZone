@@ -1,59 +1,61 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Services;
 
 namespace WordZone.ViewModels
 {
-    class MainWVM : INotifyPropertyChanged
+    public class MainWVM : INotifyPropertyChanged
     {
-        public ICommand StartQuizCommand { get;}
-        public ICommand MakePacketCommand { get;}
-        private string _tableName;
-        private Dictionary<string, string> _dictionary;
-        private DataService _dataService;
-        public string TableName
+        private object _currentViewModel;
+        public object CurrentViewModel
         {
-            get { return _tableName; }
+            get => _currentViewModel;
             set
             {
-                _tableName = value;
-                OnPropertyChanged();
+                _currentViewModel = value;
+                OnPropertyChanged(nameof(CurrentViewModel));
             }
+        }
+        private Visibility _menu;
+        public Visibility Menu
+        {
+            get => _menu;
+            set 
+            { 
+                _menu = value;
+                OnPropertyChanged(nameof(Menu));
+            }
+
         }
 
-        public Dictionary<string, string> Dictionary
-        {
-            get { return _dictionary; }
-            set
-            {
-                _dictionary = value;
-                OnPropertyChanged();
-            }
-        }
+        public ICommand NavigateToAddPacketPageCommand { get; }
+        public ICommand NavigateToQuizPageCommand { get; }
+
+        private DataService _dataService;
+
+
 
         public MainWVM(DataService dataService)
         {
+            NavigateToAddPacketPageCommand = new RelayCommand(_ => NavigateAddPacketPage());
+            NavigateToQuizPageCommand = new RelayCommand(_ => NavigateToSecondPage());
             _dataService = dataService;
-            StartQuizCommand = new RelayCommand(StartQuiz);
-            MakePacketCommand = new RelayCommand(MakePacket);
-
-            _dictionary = new Dictionary<string, string>();
+            Menu = Visibility.Visible;
         }
-
-        private void MakePacket(object obj)
+        private void NavigateAddPacketPage()
         {
-            if (!string.IsNullOrEmpty(TableName))
-            {
-                _dataService.CreateTable(TableName);
-            }
+            Menu = Visibility.Hidden;
+            CurrentViewModel = new AddPacketPVM(_dataService,this);
+        }
+        private void NavigateToSecondPage()
+        {
+            Menu = Visibility.Hidden;
+            CurrentViewModel = new QuizPVM(_dataService);
         }
 
-        private void StartQuiz(object obj)
-        {
-            Dictionary = _dataService.CreateDictionary(TableName);
-        }
 
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {

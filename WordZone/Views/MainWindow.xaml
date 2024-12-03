@@ -7,28 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel Margin="20">
-            <!-- TextBox for table name -->
-            <TextBox Text="{Binding TableName}" Width="300" Height="30" Margin="0, 0, 0, 20" />
-            <TextBlock Text="{Binding TableName}" Width="300" Height="30" Margin="0, 0, 0, 20"/>
-
-            <!-- Button to create table -->
-            <Button Content="Create Table" Width="300" Height="30" Command="{Binding MakePacketCommand}" Margin="0, 0, 0, 20" />
-
-            <!-- Button to load data into dictionary -->
-            <Button Content="Load to Dictionary" Width="300" Height="30" Command="{Binding StartQuizCommand}" Margin="0, 0, 0, 20" />
-
-            <!-- ListBox to display the dictionary -->
-            <ListBox ItemsSource="{Binding Dictionary}" Width="300" Height="200" Margin="0, 0, 0, 20">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Key}" />
-                            <TextBlock Text="{Binding Value}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+        <StackPanel Visibility="{Binding Menu}">
+            <Button Content="addpacket" Command="{Binding NavigateToAddPacketPageCommand}"></Button>
         </StackPanel>
+        <Frame Content="{Binding CurrentViewModel}" Margin="10" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

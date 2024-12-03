@@ -1,7 +1,5 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Collections.Generic;
 using WordZone.Models;
 
 namespace WordZone.Services
@@ -13,7 +11,7 @@ namespace WordZone.Services
         {
             _context = dbContext;
         }
-        public void CreateTable(string tableName)
+        public void CreateTable(string tableName,List<Translation> translations)
         {
             string sql = $@"
             CREATE TABLE IF NOT EXISTS [{tableName}] (
@@ -23,6 +21,11 @@ namespace WordZone.Services
             )";
 
             _context.Database.ExecuteSqlRaw(sql);
+            foreach (var translation in translations)
+            {
+                string sqlcommand = $@"INSERT INTO [{tableName}] (EnglishWord, PolishTranslation) VALUES ('{translation.EnglishWord}','{translation.PolishTranslation}')";
+                _context.Database.ExecuteSqlRaw(sqlcommand);
+            }
         }
         public Dictionary<string,string> CreateDictionary(string tableName)
         {
