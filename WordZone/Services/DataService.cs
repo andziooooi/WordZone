@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using WordZone.Models;
 
 namespace WordZone.Services
@@ -43,6 +44,19 @@ namespace WordZone.Services
                 return error;
             }
             
+        }
+        public List<string> GetTablesName()
+        {
+            string sql = @"SELECT name from sqlite_master where type ='table'";
+            var tables = _context.TableNames.FromSqlRaw(sql).AsNoTracking().ToList();
+            tables.RemoveAt(0);
+            List<string> tablesName = new List<string>();
+            foreach (var table in tables) 
+            {
+                tablesName.Add(table.Name);
+            }
+            
+            return tablesName;
         }
     }
 }

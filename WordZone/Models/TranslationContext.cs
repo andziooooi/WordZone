@@ -6,6 +6,7 @@ namespace WordZone.Models
     public class TranslationContext : DbContext
     {
         public DbSet<Translation> Translations { get; set; }
+        public DbSet<TableNames> TableNames { get; set; }
 
         public TranslationContext(DbContextOptions<TranslationContext> options) : base(options) { }
 
