@@ -10,7 +10,9 @@
 
     <Grid>
         <StackPanel>
-            <Button Content="Load to Dictionary" Width="300" Height="30" Command="{Binding StartQuizCommand}" Margin="0, 0, 0, 20" />
+            <Button Content="Menu" Command="{Binding BackToMenuCommand}"/>
+            <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300"/>
+            <Button Content="Load to Dictionary" Width="300" Height="30" Command="{Binding StartQuizCommand}" Margin="0, 20, 0, 20" />
 
             <!-- ListBox to display the dictionary -->
             <ListBox ItemsSource="{Binding Dictionary}" Width="300" Height="200" Margin="0, 0, 0, 20">
@@ -23,6 +25,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            
         </StackPanel>
     </Grid>
 </Page>

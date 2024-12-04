@@ -53,7 +53,7 @@ namespace WordZone.ViewModels
         private void NavigateToSecondPage()
         {
             Menu = Visibility.Hidden;
-            CurrentViewModel = new QuizPVM(_dataService);
+            CurrentViewModel = new QuizPVM(_dataService,this);
         }
 
 

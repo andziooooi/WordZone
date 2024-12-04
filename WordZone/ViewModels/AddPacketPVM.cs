@@ -13,7 +13,7 @@ namespace WordZone.ViewModels
     {
         private string _tableName;
         private int _numberofrows;
-        public MainWVM _mainViewModel;
+        private MainWVM _mainViewModel;
         public ICommand MakePacketCommand { get; }
         public ICommand BackToMenuCommand { get; }
         public ICommand GenerateRowsCommand { get; }
@@ -42,14 +42,15 @@ namespace WordZone.ViewModels
         }
         public AddPacketPVM(DataService ds,MainWVM mainWVM)
         {
-            _tableName = "";
             _mainViewModel = mainWVM;
             _dataService = ds;
+
+            _tableName = "";
             TextRows = new ObservableCollection<Record>();
+
             MakePacketCommand = new RelayCommand(MakePacket);
             BackToMenuCommand = new RelayCommand(BackToMenu);
             GenerateRowsCommand = new RelayCommand(GenerateRows);
-
         }
 
         private void GenerateRows(object obj)

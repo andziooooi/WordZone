@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Services;
@@ -8,9 +9,12 @@ namespace WordZone.ViewModels
 {
     public class QuizPVM : INotifyPropertyChanged
     {
+        private MainWVM _mainViewModel;
         private string _tableName;
+        private List<string> _tableNamesList;
 
         public ICommand StartQuizCommand { get; }
+        public ICommand BackToMenuCommand { get; }
         public string TableName
         {
             get { return _tableName; }
@@ -20,15 +24,34 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
+        public List<string> TableNamesList
+        {
+            get { return _tableNamesList; }
+            set
+            {
+                _tableNamesList = value;
+                OnPropertyChanged();
+            }
+        }
         private Dictionary<string, string> _dictionary;
         private DataService _dataService;
 
-        public QuizPVM(DataService ds)
+        public QuizPVM(DataService ds, MainWVM mainWVM)
         {
+            _mainViewModel = mainWVM;
             _dataService = ds;
-            StartQuizCommand = new RelayCommand(StartQuiz);
+
+            TableNamesList = _dataService.GetTablesName();
             _dictionary = new Dictionary<string, string>();
-            _tableName = "siema";
+            TableName = "Wybierz zbiór";
+
+            StartQuizCommand = new RelayCommand(StartQuiz);
+            BackToMenuCommand = new RelayCommand(BackToMenu);
+        }
+        private void BackToMenu(object obj)
+        {
+            _mainViewModel.Menu = Visibility.Visible;
+            _mainViewModel.CurrentViewModel = null;
         }
         public Dictionary<string, string> Dictionary
         {
@@ -41,7 +64,11 @@ namespace WordZone.ViewModels
         }
         private void StartQuiz(object obj)
         {
-            Dictionary = _dataService.CreateDictionary(TableName);
+            if(TableName != "Wybierz zbiór")
+            {
+                Dictionary = _dataService.CreateDictionary(TableName);
+            }
+            
         }
 
  

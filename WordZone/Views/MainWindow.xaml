@@ -9,6 +9,7 @@
     <Grid>
         <StackPanel Visibility="{Binding Menu}">
             <Button Content="addpacket" Command="{Binding NavigateToAddPacketPageCommand}"></Button>
+            <Button Content="QuizPage" Command="{Binding NavigateToQuizPageCommand}"></Button>
         </StackPanel>
         <Frame Content="{Binding CurrentViewModel}" Margin="10" NavigationUIVisibility="Hidden"/>
     </Grid>
