@@ -9,13 +9,20 @@
       Title="QuizPage">
 
     <Grid>
-        <StackPanel>
+        <StackPanel Visibility="{Binding QMVis}">
             <Button Content="Menu" Command="{Binding BackToMenuCommand}"/>
             <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300"/>
             <Button Content="Load to Dictionary" Width="300" Height="30" Command="{Binding StartQuizCommand}" Margin="0, 20, 0, 20" />
+        </StackPanel>
+            
+         <StackPanel Visibility="{Binding QVis}">
+            <TextBlock Text="{Binding KeyVal}" Width="300" Margin="0,0,0,20" TextAlignment="Center"/>
+            <TextBox Text="{Binding UserVal}" Width="300" TextAlignment="Center" Margin="0,0,0,20"/>
+            <Button Content="{Binding QButton}" Width="300" Command="{Binding NextQuestionCommand}" />
+         </StackPanel>
 
-            <!-- ListBox to display the dictionary -->
-            <ListBox ItemsSource="{Binding Dictionary}" Width="300" Height="200" Margin="0, 0, 0, 20">
+        <StackPanel Visibility="{Binding QResVis}">
+            <ListBox ItemsSource="{Binding DictionaryGood}" Width="300" Height="200" Margin="0, 0, 0, 20">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -25,7 +32,17 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            
+            <ListBox ItemsSource="{Binding DictionaryBad}" Width="300" Height="200" Margin="0, 0, 0, 20">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Key}" />
+                            <TextBlock Text="{Binding Value}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
+
     </Grid>
 </Page>
