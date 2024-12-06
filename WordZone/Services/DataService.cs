@@ -59,5 +59,19 @@ namespace WordZone.Services
             
             return tablesName;
         }
+
+        public void UpdateTable(List<Translation> translation, string tableName)
+        {
+            if (!string.IsNullOrEmpty(tableName))
+            {
+                for (int i = 0; i < translation.Count; i++)
+                {
+                    {
+                        string sql = $@"UPDATE {tableName} SET EnglishWord = '{translation[i].EnglishWord}', PolishTranslation = '{translation[i].PolishTranslation}' WHERE Id = {i+1};";
+                    }
+                }
+
+            }
+        }
     }
 }
