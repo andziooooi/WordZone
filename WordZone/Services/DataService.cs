@@ -51,6 +51,7 @@ namespace WordZone.Services
             var tables = _context.TableNames.FromSqlRaw(sql).AsNoTracking().ToList();
             tables.RemoveAt(0);
             List<string> tablesName = new List<string>();
+            tablesName.Add("Wybierz zbiór");
             foreach (var table in tables) 
             {
                 tablesName.Add(table.Name);
