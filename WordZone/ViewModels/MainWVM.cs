@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Services;
@@ -19,17 +18,6 @@ namespace WordZone.ViewModels
                 OnPropertyChanged(nameof(CurrentViewModel));
             }
         }
-        private Visibility _menu;
-        public Visibility Menu
-        {
-            get => _menu;
-            set 
-            { 
-                _menu = value;
-                OnPropertyChanged(nameof(Menu));
-            }
-
-        }
 
         public ICommand NavigateToAddPacketPageCommand { get; }
         public ICommand NavigateToQuizPageCommand { get; }
@@ -43,16 +31,13 @@ namespace WordZone.ViewModels
             NavigateToAddPacketPageCommand = new RelayCommand(_ => NavigateAddPacketPage());
             NavigateToQuizPageCommand = new RelayCommand(_ => NavigateToSecondPage());
             _dataService = dataService;
-            Menu = Visibility.Visible;
         }
         private void NavigateAddPacketPage()
         {
-            Menu = Visibility.Hidden;
             CurrentViewModel = new AddPacketPVM(_dataService,this);
         }
         private void NavigateToSecondPage()
         {
-            Menu = Visibility.Hidden;
             CurrentViewModel = new QuizPVM(_dataService,this);
         }
 

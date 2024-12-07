@@ -1,6 +1,9 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
+using System.Security.Policy;
 using WordZone.Models;
 
 namespace WordZone.Services
@@ -12,7 +15,7 @@ namespace WordZone.Services
         {
             _context = dbContext;
         }
-        public void CreateTable(string tableName,List<Translation> translations)
+        public void CreateTable(string tableName,ObservableCollection<Translation> translations)
         {
             string sql = $@"
             CREATE TABLE IF NOT EXISTS [{tableName}] (
@@ -28,12 +31,26 @@ namespace WordZone.Services
                 _context.Database.ExecuteSqlRaw(sqlcommand);
             }
         }
+        public List<Translation> GetTranslations(string tableName)
+        {
+            if (!string.IsNullOrEmpty(tableName))
+            {
+                var translations = _context.Translations.FromSqlRaw($"SELECT * FROM {tableName}").AsNoTracking().ToList();
+                return translations;
+            }
+            else
+            {
+                List<Translation> er = new List<Translation>();
+                er.Add(new Translation("error", "error"));
+                return er;
+            }
+        }
         public Dictionary<string,string> CreateDictionary(string tableName)
         {
 
             if (!string.IsNullOrEmpty(tableName))
             {
-                var translations = _context.Translations.FromSqlRaw($"SELECT * FROM {tableName}").AsNoTracking().ToList();
+                var translations = GetTranslations(tableName);
                 Dictionary<string, string> Dictionary = translations.ToDictionary(t => t.EnglishWord, t => t.PolishTranslation);
                 return Dictionary;
             }
@@ -64,13 +81,27 @@ namespace WordZone.Services
         {
             if (!string.IsNullOrEmpty(tableName))
             {
+                string sql = "";
                 for (int i = 0; i < translation.Count; i++)
                 {
                     {
-                        string sql = $@"UPDATE {tableName} SET EnglishWord = '{translation[i].EnglishWord}', PolishTranslation = '{translation[i].PolishTranslation}' WHERE Id = {i+1};";
+                        sql = $@"UPDATE {tableName} SET EnglishWord = '{translation[i].EnglishWord}', PolishTranslation = '{translation[i].PolishTranslation}' WHERE Id = {i+1};";
+                        _context.Database.ExecuteSqlRaw(sql);
                     }
                 }
-
+            }
+        }
+        public int CountRows(string tableName)
+        {
+            if (!string.IsNullOrEmpty(tableName))
+            {
+                string sql = $@"select count(*) from {tableName}";
+                int result = Convert.ToInt32(_context.Database.ExecuteSqlRaw(sql));
+                return result;
+            }
+            else
+            {
+                return 0;
             }
         }
     }

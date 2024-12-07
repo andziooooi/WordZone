@@ -19,8 +19,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBox Width="200" Margin="0,5" Text="{Binding EngWord}" />
-                                <TextBox Width="200" Margin="0,5" Text="{Binding PlTranslation}" />
+                                <TextBox Width="200" Margin="0,5" Text="{Binding EnglishWord}" />
+                                <TextBox Width="200" Margin="0,5" Text="{Binding PolishTranslation}" />
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

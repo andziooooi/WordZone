@@ -221,7 +221,6 @@ namespace WordZone.ViewModels
         }
         private void BackToMenu(object obj)
         {
-            _mainViewModel.Menu = Visibility.Visible;
             _mainViewModel.CurrentViewModel = null;
         }
 

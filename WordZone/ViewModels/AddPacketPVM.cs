@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Models;
@@ -19,7 +18,7 @@ namespace WordZone.ViewModels
         public ICommand GenerateRowsCommand { get; }
         private DataService _dataService;
 
-        public ObservableCollection<Record> TextRows { get; set; }
+        public ObservableCollection<Translation> TextRows { get; set; }
 
 
         public int NumberOfRows
@@ -46,10 +45,9 @@ namespace WordZone.ViewModels
             _dataService = ds;
 
             _tableName = "";
-            TextRows = new ObservableCollection<Record>();
+            TextRows = new ObservableCollection<Translation>();
 
             MakePacketCommand = new RelayCommand(MakePacket);
-            BackToMenuCommand = new RelayCommand(BackToMenu);
             GenerateRowsCommand = new RelayCommand(GenerateRows);
         }
 
@@ -59,26 +57,14 @@ namespace WordZone.ViewModels
 
             for (int i = 0; i < NumberOfRows; i++)
             {
-                TextRows.Add(new Record());
+                TextRows.Add(new Translation());
             }
         }
-
-        private void BackToMenu(object obj)
-        {
-            _mainViewModel.Menu = Visibility.Visible;
-            _mainViewModel.CurrentViewModel = null;
-        }
-
         private void MakePacket(object obj)
         {
             if (!string.IsNullOrEmpty(TableName))
             {
-                List<Translation> translations = new List<Translation>();
-                foreach (Record r in TextRows)
-                {
-                    translations.Add(new Translation(r.EngWord, r.PlTranslation));
-                }
-                _dataService.CreateTable(TableName,translations);
+                _dataService.CreateTable(TableName,TextRows);
             }
         }
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -87,9 +73,5 @@ namespace WordZone.ViewModels
         }
         public event PropertyChangedEventHandler? PropertyChanged;
     }
-    public class Record
-    {
-        public string EngWord { get; set; }
-        public string PlTranslation { get; set; }
-    }
+
 }
