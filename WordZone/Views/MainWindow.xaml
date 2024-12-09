@@ -10,7 +10,8 @@
         <StackPanel>
             <Button Content="addpacket" Command="{Binding NavigateToAddPacketPageCommand}"></Button>
             <Button Content="QuizPage" Command="{Binding NavigateToQuizPageCommand}"></Button>
+            <Button Content="EditPage" Command="{Binding NavigateToEditPacketPageCommand}"></Button>
         </StackPanel>
-        <Frame Content="{Binding CurrentViewModel}" Margin="0,40,0,0" NavigationUIVisibility="Hidden"/>
+        <Frame Content="{Binding CurrentViewModel}" Margin="0,60,0,0" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

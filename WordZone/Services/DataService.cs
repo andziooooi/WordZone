@@ -77,7 +77,7 @@ namespace WordZone.Services
             return tablesName;
         }
 
-        public void UpdateTable(List<Translation> translation, string tableName)
+        public void UpdateTable(ObservableCollection<Translation> translation, string tableName)
         {
             if (!string.IsNullOrEmpty(tableName))
             {

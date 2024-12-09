@@ -21,24 +21,30 @@ namespace WordZone.ViewModels
 
         public ICommand NavigateToAddPacketPageCommand { get; }
         public ICommand NavigateToQuizPageCommand { get; }
-
+        public ICommand NavigateToEditPacketPageCommand { get; }
         private DataService _dataService;
 
 
 
         public MainWVM(DataService dataService)
         {
+
             NavigateToAddPacketPageCommand = new RelayCommand(_ => NavigateAddPacketPage());
-            NavigateToQuizPageCommand = new RelayCommand(_ => NavigateToSecondPage());
+            NavigateToQuizPageCommand = new RelayCommand(_ => NavigateToQuizPage());
+            NavigateToEditPacketPageCommand = new RelayCommand(_ => NavigateToEditPacketPage());
             _dataService = dataService;
         }
         private void NavigateAddPacketPage()
         {
             CurrentViewModel = new AddPacketPVM(_dataService,this);
         }
-        private void NavigateToSecondPage()
+        private void NavigateToQuizPage()
         {
             CurrentViewModel = new QuizPVM(_dataService,this);
+        }
+        private void NavigateToEditPacketPage()
+        {
+            CurrentViewModel = new EditPacketVM(_dataService);
         }
 
 
