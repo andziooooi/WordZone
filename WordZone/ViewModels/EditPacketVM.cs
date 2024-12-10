@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -16,6 +17,7 @@ namespace WordZone.ViewModels
         private string _tableName;
         private List<Translation> _translations;
         private Visibility _updateVis;
+        private int _initialValue;
         public ObservableCollection<Translation> TextRows {  get; set; }
         public Visibility UpdateVis
         {
@@ -56,6 +58,8 @@ namespace WordZone.ViewModels
         public ICommand StartEditCommand { get;}
         public ICommand UpdateItemsCommand { get;}
         public ICommand AddRowCommand { get;}
+        public ICommand DeleteRowCommand { get;}
+        public ICommand DeletePacketCommand { get;}
 
         public EditPacketVM(DataService ds)
         {
@@ -66,15 +70,19 @@ namespace WordZone.ViewModels
             _translations = new List<Translation>();
             TextRows = new ObservableCollection<Translation>();
             _updateVis = Visibility.Hidden;
+            _initialValue = 0;
 
             StartEditCommand = new RelayCommand(StartEdit);
             UpdateItemsCommand = new RelayCommand(UpdateItems);
             AddRowCommand = new RelayCommand(AddRow);
+            DeleteRowCommand = new RelayCommand(DeleteRow);
+            DeletePacketCommand = new RelayCommand(DeletePacket);
         }
 
         private void StartEdit(object obj)
         {
             Translations = _dataService.GetTranslations(TableName);
+            _initialValue = Translations.Count;
             TextRows.Clear();
             foreach (Translation translation in Translations) 
             {
@@ -84,15 +92,30 @@ namespace WordZone.ViewModels
         }
         private void UpdateItems(object obj)
         {
-            _dataService.UpdateTable(TextRows, TableName);
+            _dataService.UpdateTable(TextRows, TableName,_initialValue);
             TextRows.Clear();
             UpdateVis = Visibility.Hidden;
         }
-        //private void AddRow(object obj)
-        //{
-        //    TextRows.Add(new Translation());
-        //}
+        private void AddRow(object obj)
+        {
+            TextRows.Add(new Translation("",""));
+        }
+        private void DeleteRow(object obj)
+        {
+            string Eng = obj.ToString();
+            _dataService.UpdateTable(TextRows,TableName,_initialValue);
+            _dataService.DeleteRow(Eng, TableName);
+            StartEdit(null);
+        }
+        private void DeletePacket(object obj)
+        {
+            _dataService.DropTable(TableName);
+            TextRows.Clear();
+            UpdateVis = Visibility.Hidden;
+            TableNamesList = _dataService.GetTablesName();
+            TableName = "Wybierz zbiór";
 
+        }
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

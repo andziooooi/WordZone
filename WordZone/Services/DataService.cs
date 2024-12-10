@@ -1,9 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Security.Policy;
 using WordZone.Models;
 
 namespace WordZone.Services
@@ -77,19 +74,35 @@ namespace WordZone.Services
             return tablesName;
         }
 
-        public void UpdateTable(ObservableCollection<Translation> translation, string tableName)
+        public void UpdateTable(ObservableCollection<Translation> translation, string tableName,int initialvalue)
         {
             if (!string.IsNullOrEmpty(tableName))
             {
                 string sql = "";
                 for (int i = 0; i < translation.Count; i++)
                 {
+                    if(i<initialvalue)
                     {
-                        sql = $@"UPDATE {tableName} SET EnglishWord = '{translation[i].EnglishWord}', PolishTranslation = '{translation[i].PolishTranslation}' WHERE Id = {i+1};";
+                        sql = $@"UPDATE {tableName} SET EnglishWord = '{translation[i].EnglishWord}', PolishTranslation = '{translation[i].PolishTranslation}' WHERE Id = {translation[i].Id};";
+                        _context.Database.ExecuteSqlRaw(sql);
+                    }
+                    else if (!string.IsNullOrEmpty(translation[i].EnglishWord))
+                    {
+                         sql = $@"INSERT INTO [{tableName}] (EnglishWord, PolishTranslation) VALUES ('{translation[i].EnglishWord}','{translation[i].PolishTranslation}')";
                         _context.Database.ExecuteSqlRaw(sql);
                     }
                 }
             }
+        }
+        public void DeleteRow(string eng, string tableName)
+        {
+            string sql = $@"DELETE FROM {tableName} where EnglishWord = '{eng}'";
+            _context.Database.ExecuteSqlRaw(sql);
+        }
+        public void DropTable(string tableName)
+        {
+            string sql = $@"DROP TABLE {tableName}";
+            _context.Database.ExecuteSqlRaw(sql);
         }
         public int CountRows(string tableName)
         {
