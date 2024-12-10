@@ -22,6 +22,7 @@ namespace WordZone.ViewModels
         public ICommand NavigateToAddPacketPageCommand { get; }
         public ICommand NavigateToQuizPageCommand { get; }
         public ICommand NavigateToEditPacketPageCommand { get; }
+        public ICommand NavigateToFlashCardsCommand { get; }
         private DataService _dataService;
 
 
@@ -32,7 +33,12 @@ namespace WordZone.ViewModels
             NavigateToAddPacketPageCommand = new RelayCommand(_ => NavigateAddPacketPage());
             NavigateToQuizPageCommand = new RelayCommand(_ => NavigateToQuizPage());
             NavigateToEditPacketPageCommand = new RelayCommand(_ => NavigateToEditPacketPage());
+            NavigateToFlashCardsCommand = new RelayCommand(_ => NavigateToFlashCards());
             _dataService = dataService;
+        }
+        private void NavigateToFlashCards()
+        {
+            CurrentViewModel = new FlashCardsPVM(_dataService);
         }
         private void NavigateAddPacketPage()
         {

@@ -16,5 +16,8 @@
         <DataTemplate DataType="{x:Type vm:EditPacketVM}">
             <vw:EditPacket/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FlashCardsPVM}">
+            <vw:FlashCards/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

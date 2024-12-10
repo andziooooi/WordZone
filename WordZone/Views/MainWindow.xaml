@@ -11,7 +11,8 @@
             <Button Content="addpacket" Command="{Binding NavigateToAddPacketPageCommand}"></Button>
             <Button Content="QuizPage" Command="{Binding NavigateToQuizPageCommand}"></Button>
             <Button Content="EditPage" Command="{Binding NavigateToEditPacketPageCommand}"></Button>
+            <Button Content="FlashCards" Command="{Binding NavigateToFlashCardsCommand}"></Button>
         </StackPanel>
-        <Frame Content="{Binding CurrentViewModel}" Margin="0,60,0,0" NavigationUIVisibility="Hidden"/>
+        <Frame Content="{Binding CurrentViewModel}" Margin="0,80,0,0" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
