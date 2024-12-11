@@ -10,8 +10,14 @@
         <DataTemplate DataType="{x:Type vm:AddPacketPVM}">
             <vw:AddPacket/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:QuizMenuPVM}">
+            <vw:QuizMenu/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:QuizPVM}">
             <vw:QuizPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:QuizResultPVM}">
+            <vw:QuizResult/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:EditPacketVM}">
             <vw:EditPacket/>

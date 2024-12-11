@@ -31,7 +31,7 @@ namespace WordZone.ViewModels
         {
 
             NavigateToAddPacketPageCommand = new RelayCommand(_ => NavigateAddPacketPage());
-            NavigateToQuizPageCommand = new RelayCommand(_ => NavigateToQuizPage());
+            NavigateToQuizPageCommand = new RelayCommand(_ => NavigateToQuizPage(""));
             NavigateToEditPacketPageCommand = new RelayCommand(_ => NavigateToEditPacketPage());
             NavigateToFlashCardsCommand = new RelayCommand(_ => NavigateToFlashCards());
             _dataService = dataService;
@@ -44,15 +44,18 @@ namespace WordZone.ViewModels
         {
             CurrentViewModel = new AddPacketPVM(_dataService,this);
         }
-        private void NavigateToQuizPage()
+        private void NavigateToQuizPage(string Table)
         {
-            CurrentViewModel = new QuizPVM(_dataService,this);
+            CurrentViewModel = new QuizMenuPVM(Table,_dataService,this);
         }
         private void NavigateToEditPacketPage()
         {
             CurrentViewModel = new EditPacketVM(_dataService);
         }
-
+        public void QRe(string Table)
+        {
+            NavigateToQuizPage(Table);
+        }
 
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {

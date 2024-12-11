@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -13,7 +11,6 @@ namespace WordZone.ViewModels
     {
         private MainWVM _mainViewModel;
         private string _tableName;
-        private List<string> _tableNamesList;
         private List<int> ListOfBad;
         private int _currentIndex;
         private int _currentIndexDisp;
@@ -23,64 +20,20 @@ namespace WordZone.ViewModels
         private string _qbutton;
         private int _numberofelements;
         private Dictionary<string, string> _dictionary;
-        private Dictionary<string, string> _dictionarybad;
         private DataService _dataService;
-        private Visibility _qVis;
-        private Visibility _qmVis;
-        private Visibility _qresVis;
-        private Visibility _qendbutvis;
         private int _points;
-        private Dictionary<string, string> _dictionarygood;
+        private Visibility _qEndButVis;
 
 
-        public ICommand StartQuizCommand { get; }
-        public ICommand BackToMenuCommand { get; }
         public ICommand NextQuestionCommand { get; }
         public ICommand EndQuizCommand { get; }
-        public ICommand ReDoCommand { get; }
-        public ICommand NewPackCommand {  get; }
-        public Visibility QVis
-        {
-            get { return _qVis; }
-            set
-            {
-                _qVis = value;
-                OnPropertyChanged();
-            }
-        }
-        public Visibility QResVis
-        {
-            get { return _qresVis; }
-            set
-            {
-                _qresVis = value;
-                OnPropertyChanged();
-            }
-        }
-        public Visibility QMVis
-        {
-            get { return _qmVis; }
-            set
-            {
-                _qmVis = value;
-                OnPropertyChanged();
-            }
-        }
+
         public Visibility QEndButVis
         {
-            get { return _qendbutvis; }
+            get { return _qEndButVis; }
             set
             {
-                _qendbutvis = value;
-                OnPropertyChanged();
-            }
-        }
-        public string TableName
-        {
-            get { return _tableName; }
-            set
-            {
-                _tableName = value;
+                _qEndButVis = value;
                 OnPropertyChanged();
             }
         }
@@ -121,15 +74,6 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public string DicVal
-        {
-            get { return _dicVal; }
-            set
-            {
-                _dicVal = value;
-                OnPropertyChanged();
-            }
-        }
         public string UserVal
         {
             get { return _userVal; }
@@ -139,24 +83,7 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public int Points
-        {
-            get { return _points; }
-            set
-            {
-                _points = value;
-                OnPropertyChanged();
-            }
-        }
-        public List<string> TableNamesList
-        {
-            get { return _tableNamesList; }
-            set
-            {
-                _tableNamesList = value;
-                OnPropertyChanged();
-            }
-        }
+
         public Dictionary<string, string> Dictionary
         {
             get { return _dictionary; }
@@ -166,85 +93,39 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public Dictionary<string, string> DictionaryBad
-        {
-            get { return _dictionarybad; }
-            set
-            {
-                _dictionarybad = value;
-                OnPropertyChanged();
-            }
-        }
-        public Dictionary<string, string> DictionaryGood
-        {
-            get { return _dictionarygood; }
-            set
-            {
-                _dictionarygood = value;
-                OnPropertyChanged();
-            }
-        }
 
 
-        public QuizPVM(DataService ds, MainWVM mainWVM)
+        public QuizPVM(string tableName,Dictionary<string,string> dictionary,DataService ds, MainWVM mainWVM)
         {
             _mainViewModel = mainWVM;
             _dataService = ds;
-            _qmVis = Visibility.Visible;
-            _qVis = Visibility.Hidden;
-            _qresVis = Visibility.Hidden;
-            _qendbutvis = Visibility.Visible;
-            _keyVal = "";
-            _dicVal = "";
+            _dictionary = dictionary;
+            _numberofelements = Dictionary.Count;
+            _currentIndex = 0;
+            _keyVal = Dictionary.ElementAt(0).Key;
+            _dicVal = Dictionary.ElementAt(0).Value;
             _userVal = "";
             _qbutton = "Następne pytanie";
-            _currentIndex = 0;
             _currentIndexDisp = 1;
-            _numberofelements = 0;
             _points = 0;
             ListOfBad = new List<int>();
-
-
-            _tableNamesList = _dataService.GetTablesName();
-            _dictionary = new Dictionary<string, string>();
-            _dictionarybad = new Dictionary<string, string>();
-            _dictionarygood= new Dictionary<string, string>();
-            _tableName = "Wybierz zbiór";
+            _qEndButVis = Visibility.Visible;
+            _tableName = tableName;
 
             //commands
-            StartQuizCommand = new RelayCommand(StartQuiz);
-            BackToMenuCommand = new RelayCommand(BackToMenu);
             NextQuestionCommand = new RelayCommand(NextQuestion);
             EndQuizCommand = new RelayCommand(EndQuiz);
-            ReDoCommand = new RelayCommand(ReDo);
-            NewPackCommand = new RelayCommand(NewPack);
-        }
-        private void BackToMenu(object obj)
-        {
-            _mainViewModel.CurrentViewModel = null;
-        }
 
-        private void StartQuiz(object obj)
-        {
-            if (TableName != "Wybierz zbiór")
-            {
-                Dictionary = _dataService.CreateDictionary(TableName);
-                NumberOfElements = Dictionary.Count;
-                QVis = Visibility.Visible;
-                QMVis = Visibility.Hidden;
-                KeyVal = Dictionary.ElementAt(_currentIndex).Key;
-                DicVal = Dictionary.ElementAt(_currentIndex).Value;
-            }
         }
         private void NextQuestion(object obj)
         {
-            if (DicVal.ToLower() != UserVal.ToLower())
+            if (_dicVal.ToLower() != UserVal.ToLower())
             {
                 ListOfBad.Add(_currentIndex);
             }
             else
             {
-                Points++;
+                _points++;
             }
             UserVal = "";
             _currentIndex++;
@@ -252,30 +133,26 @@ namespace WordZone.ViewModels
             if (_currentIndex < _numberofelements -1)
             {
                 KeyVal = Dictionary.ElementAt(_currentIndex).Key;
-                DicVal = Dictionary.ElementAt(_currentIndex).Value;
+                _dicVal = Dictionary.ElementAt(_currentIndex).Value;
             }
             else if (_currentIndex == _numberofelements - 1)
             {
                 KeyVal = Dictionary.ElementAt(_currentIndex).Key;
-                DicVal = Dictionary.ElementAt(_currentIndex).Value;
-                QEndButVis = Visibility.Hidden;
+                _dicVal = Dictionary.ElementAt(_currentIndex).Value;
                 QButton = "Zakończ Quiz";
+                QEndButVis = Visibility.Hidden;
             }
             else
             {
-                QVis = Visibility.Hidden;
-                QMVis= Visibility.Hidden;
-                Results();
-                QResVis = Visibility.Visible;
-
+                _mainViewModel.CurrentViewModel = new QuizResultPVM(_tableName,ListOfBad, Dictionary, _mainViewModel,_points);
             }
         }
 
         private void EndQuiz(object obj)
         {
-            if (DicVal.ToLower() == UserVal.ToLower())
+            if (_dicVal.ToLower() == UserVal.ToLower())
             {
-                Points++;
+                _points++;
                 _currentIndex++;
             }
             while (_currentIndex <= _numberofelements-1)
@@ -284,69 +161,7 @@ namespace WordZone.ViewModels
                 _currentIndex++;
             }
 
-            QVis = Visibility.Hidden;
-            QMVis= Visibility.Hidden;
-            Results();
-            QResVis = Visibility.Visible;
-        }
-
-        private void ReDo(object obj) 
-        {
-            var tnhelp = TableName;
-            ReInitialize();
-            _tableName = tnhelp;
-            StartQuiz(null);
-        }
-        private void NewPack(object obj)
-        {
-            ReInitialize();
-        }
-        private void ReInitialize()
-        {
-            QMVis = Visibility.Visible;
-            QVis = Visibility.Hidden;
-            QResVis = Visibility.Hidden;
-            QEndButVis = Visibility.Visible;
-            KeyVal = "";
-            DicVal = "";
-            UserVal = "";
-            QButton = "Następne pytanie";
-            _currentIndex = 0;
-            CurrentIndexDisp = 1;
-            NumberOfElements = 0;
-            Points = 0;
-            ListOfBad = new List<int>();
-
-
-            TableNamesList = _dataService.GetTablesName();
-            Dictionary = new Dictionary<string, string>();
-            DictionaryBad = new Dictionary<string, string>();
-            DictionaryGood= new Dictionary<string, string>();
-            TableName = "Wybierz zbiór";
-
-        }
-
-        private void Results()
-        {
-            Dictionary<string, string> helper = new Dictionary<string, string>();
-            foreach (var item in ListOfBad)
-            {
-                var KeyToAdd = Dictionary.Keys.ElementAt(item);
-                var ValToAdd = Dictionary[KeyToAdd];
-                helper.Add(KeyToAdd, ValToAdd);
-            }
-            DictionaryBad = helper;
-
-            foreach (KeyValuePair<string, string> h in DictionaryBad)
-            {
-                if (Dictionary.ContainsKey(h.Key))
-                {
-                    Dictionary.Remove(h.Key);
-                    OnPropertyChanged(nameof(Dictionary));
-                }
-            }
-            DictionaryGood = Dictionary;
-
+            _mainViewModel.CurrentViewModel = new QuizResultPVM(_tableName,ListOfBad, Dictionary, _mainViewModel,_points);
         }
 
 

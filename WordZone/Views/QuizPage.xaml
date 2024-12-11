@@ -10,12 +10,7 @@
       Title="QuizPage">
 
     <Grid>
-        <StackPanel Visibility="{Binding QMVis}">
-            <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300"/>
-            <Button Content="Load to Dictionary" Width="300" Height="30" Command="{Binding StartQuizCommand}" Margin="0, 20, 0, 20" />
-        </StackPanel>
-
-        <StackPanel Visibility="{Binding QVis}">
+        <StackPanel>
             <TextBlock>
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}Pytanie {0} z {1}">
@@ -33,44 +28,5 @@
             
          </StackPanel>
 
-        <StackPanel Visibility="{Binding QResVis}">
-            <TextBlock>
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{}{0}/{1}">
-                        <Binding Path="Points"/>
-                        <Binding Path="NumberOfElements"/>
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
-                <ListBox ItemsSource="{Binding DictionaryGood}" Width="300" Height="200" Margin="0, 0, 10, 0" Background="PaleGreen">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Key}" />
-                                <TextBlock Text="{Binding Value}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <ListBox ItemsSource="{Binding DictionaryBad}" Width="300" Height="200" Margin="0, 0, 10, 0" Background="PaleVioletRed">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Key}" />
-                                <TextBlock Text="{Binding Value}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Spróbuj jeszcze raz!" Command="{Binding ReDoCommand}"/>
-                <Button Content="Wróć do Menu" Command="{Binding BackToMenuCommand}"/>
-                <Button Content="Wybierz inny zbiór" Command="{Binding NewPackCommand}"/>
-            </StackPanel>
-            
-        </StackPanel>
     </Grid>
 </Page>
