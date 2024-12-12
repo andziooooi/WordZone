@@ -10,9 +10,9 @@ namespace WordZone.ViewModels
     public class AddPacketPVM : BaseVM
     {
         private string _tableName;
-        private int _numberofrows;
         private MainWVM _mainViewModel;
         private Visibility _addDelButtons;
+        private Visibility _generateRowsVis;
 
         public ICommand MakePacketCommand { get; }
         public ICommand GenerateRowsCommand { get; }
@@ -32,12 +32,12 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public int NumberOfRows
+        public Visibility GenerateRowsVis
         {
-            get { return _numberofrows; }
+            get { return _generateRowsVis; }
             set
             {
-                _numberofrows = value;
+                _generateRowsVis = value;
                 OnPropertyChanged();
             }
         }
@@ -57,7 +57,7 @@ namespace WordZone.ViewModels
 
             _tableName = "";
             _addDelButtons = Visibility.Hidden;
-            _numberofrows =0;
+            _generateRowsVis = Visibility.Visible;
             TextRows = new ObservableCollection<Translation>();
 
             MakePacketCommand = new RelayCommand(MakePacket);
@@ -69,12 +69,9 @@ namespace WordZone.ViewModels
         private void GenerateRows(object obj)
         {
             TextRows.Clear();
-
-            for (int i = 0; i < NumberOfRows; i++)
-            {
-                TextRows.Add(new Translation());
-            }
+            TextRows.Add(new Translation());
             AddDelButtons = Visibility.Visible;
+            GenerateRowsVis = Visibility.Hidden;
         }
         private void AddRow(object obj)
         {
@@ -94,8 +91,8 @@ namespace WordZone.ViewModels
                 _dataService.CreateTable(TableName,TextRows);
                 TextRows.Clear() ;
                 TableName = "";
-                NumberOfRows = 0;
                 AddDelButtons = Visibility.Hidden;
+                GenerateRowsVis = Visibility.Visible;
             }
         }
 
