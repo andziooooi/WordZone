@@ -1,12 +1,10 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Services;
 
 namespace WordZone.ViewModels
 {
-    public class MainWVM : INotifyPropertyChanged
+    public class MainWVM : BaseVM
     {
         private object _currentViewModel;
         public object CurrentViewModel
@@ -56,11 +54,5 @@ namespace WordZone.ViewModels
         {
             NavigateToQuizPage(Table);
         }
-
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

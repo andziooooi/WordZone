@@ -1,12 +1,10 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Services;
 
 namespace WordZone.ViewModels
 {
-    public class QuizMenuPVM : INotifyPropertyChanged
+    public class QuizMenuPVM : BaseVM
     {
         private Dictionary<string, string> _dictionary;
         private DataService _dataService;
@@ -69,11 +67,6 @@ namespace WordZone.ViewModels
                 _mainWVM.CurrentViewModel = new QuizPVM(TableName,Dictionary,_dataService, _mainWVM);
             }
         }
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 
 }

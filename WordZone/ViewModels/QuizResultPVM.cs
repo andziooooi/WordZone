@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using WordZone.Commands;
 
 namespace WordZone.ViewModels
 {
-    public class QuizResultPVM
+    public class QuizResultPVM : BaseVM
     {
         private MainWVM _mainWVM;
         private List<int> _listOfBad;
@@ -94,10 +86,5 @@ namespace WordZone.ViewModels
         {
             _mainWVM.CurrentViewModel = null;
         }
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

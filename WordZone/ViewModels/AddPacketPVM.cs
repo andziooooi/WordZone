@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
@@ -9,7 +7,7 @@ using WordZone.Services;
 
 namespace WordZone.ViewModels
 {
-    public class AddPacketPVM : INotifyPropertyChanged
+    public class AddPacketPVM : BaseVM
     {
         private string _tableName;
         private int _numberofrows;
@@ -100,11 +98,7 @@ namespace WordZone.ViewModels
                 AddDelButtons = Visibility.Hidden;
             }
         }
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public event PropertyChangedEventHandler? PropertyChanged;
+
     }
 
 }

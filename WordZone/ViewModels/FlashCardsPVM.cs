@@ -1,14 +1,11 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Converters;
 using WordZone.Commands;
 using WordZone.Services;
 
 namespace WordZone.ViewModels
 {
-    public class FlashCardsPVM : INotifyPropertyChanged
+    public class FlashCardsPVM : BaseVM
     {
         private string _tableName;
         private List<string> _tableNamesList;
@@ -137,11 +134,6 @@ namespace WordZone.ViewModels
             FCValue = Words.ElementAt(_index).Key;
         }
 
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }
 

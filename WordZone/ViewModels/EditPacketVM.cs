@@ -1,7 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
@@ -10,7 +7,7 @@ using WordZone.Services;
 
 namespace WordZone.ViewModels
 {
-    public class EditPacketVM : INotifyPropertyChanged
+    public class EditPacketVM : BaseVM
     {
         private DataService _dataService;
         private List<string> _tableNamesList;
@@ -116,10 +113,6 @@ namespace WordZone.ViewModels
             TableName = "Wybierz zbiór";
 
         }
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public event PropertyChangedEventHandler? PropertyChanged;
+
     }
 }

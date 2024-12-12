@@ -1,13 +1,11 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Services;
 
 namespace WordZone.ViewModels
 {
-    public class QuizPVM : INotifyPropertyChanged
+    public class QuizPVM : BaseVM
     {
         private MainWVM _mainViewModel;
         private string _tableName;
@@ -164,11 +162,5 @@ namespace WordZone.ViewModels
             _mainViewModel.CurrentViewModel = new QuizResultPVM(_tableName,ListOfBad, Dictionary, _mainViewModel,_points);
         }
 
-
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }
