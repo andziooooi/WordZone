@@ -5,25 +5,13 @@
              StartupUri="Views\MainWindow.xaml"             
              xmlns:vm="clr-namespace:WordZone.ViewModels"
              xmlns:vw="clr-namespace:WordZone.Views">
-    
+
     <Application.Resources>
-        <DataTemplate DataType="{x:Type vm:AddPacketPVM}">
-            <vw:AddPacket/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:QuizMenuPVM}">
-            <vw:QuizMenu/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:QuizPVM}">
-            <vw:QuizPage/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:QuizResultPVM}">
-            <vw:QuizResult/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:EditPacketVM}">
-            <vw:EditPacket/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:FlashCardsPVM}">
-            <vw:FlashCards/>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/DataTemplates.xaml"/>
+                <ResourceDictionary Source="Styles/Style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

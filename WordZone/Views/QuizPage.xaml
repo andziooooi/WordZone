@@ -11,14 +11,18 @@
 
     <Grid>
         <StackPanel>
-            <TextBlock>
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{}Pytanie {0} z {1}">
-                        <Binding Path="CurrentIndexDisp"/>
-                        <Binding Path="NumberOfElements"/>
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
+            <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="0,0,0,10">
+                <TextBlock Style="{StaticResource HeaderTB}">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Pytanie {0} z {1}">
+                            <Binding Path="CurrentIndexDisp"/>
+                            <Binding Path="NumberOfElements"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Border>
+
+
             <TextBlock Text="{Binding KeyVal}" Width="300" Margin="0,0,0,20" TextAlignment="Center"/>
             <TextBox Text="{Binding UserVal}" Width="300" TextAlignment="Center" Margin="0,0,0,20"/>
             <StackPanel Orientation="Horizontal">

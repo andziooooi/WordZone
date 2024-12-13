@@ -15,6 +15,7 @@ namespace WordZone.ViewModels
         private List<Translation> _translations;
         private Visibility _updateVis;
         private int _initialValue;
+        public string TableNameEdit { get; set; }
         public ObservableCollection<Translation> TextRows {  get; set; }
         public Visibility UpdateVis
         {
@@ -43,6 +44,7 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public List<string> TableNamesList
         {
             get { return _tableNamesList; }
@@ -68,6 +70,7 @@ namespace WordZone.ViewModels
             TextRows = new ObservableCollection<Translation>();
             _updateVis = Visibility.Hidden;
             _initialValue = 0;
+            TableNameEdit = TableName;
 
             StartEditCommand = new RelayCommand(StartEdit);
             UpdateItemsCommand = new RelayCommand(UpdateItems);
@@ -85,6 +88,8 @@ namespace WordZone.ViewModels
             {
                 TextRows.Add(translation);
             }
+            TableNameEdit = TableName;
+            OnPropertyChanged(nameof(TableNameEdit));
             UpdateVis = Visibility.Visible;
         }
         private void UpdateItems(object obj)

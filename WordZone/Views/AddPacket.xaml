@@ -10,7 +10,10 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <StackPanel>
-            <TextBlock Text="Stwórz nowy zbiór!" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Margin="0,0,0,10"/>
+            <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="0,0,0,10">
+                <TextBlock Text="Stwórz nowy zbiór!" Style="{StaticResource HeaderTB}"/>
+            </Border>
+            
             <TextBlock Text="Podaj nazwę nowego zbioru" HorizontalAlignment="Center" FontSize="18" FontWeight="SemiBold"/>
             <TextBox Text="{Binding TableName}" TextAlignment="Center" Width="300" Height="30" Margin="0, 5, 0,20" />
             <Button Content="Wprowadź słówka!" Command="{Binding GenerateRowsCommand}" Visibility="{Binding GenerateRowsVis}" Width="150" Height="30"/>
