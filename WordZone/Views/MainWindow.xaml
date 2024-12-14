@@ -14,10 +14,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="addpacket" Command="{Binding NavigateToAddPacketPageCommand}"></Button>
-            <Button Grid.Column="1" Content="QuizPage" Command="{Binding NavigateToQuizPageCommand}"></Button>
-            <Button Grid.Column="2" Content="EditPage" Command="{Binding NavigateToEditPacketPageCommand}"></Button>
-            <Button Grid.Column="3" Content="FlashCards" Command="{Binding NavigateToFlashCardsCommand}"></Button>
+            <Button Content="Dodaj zbiór słów" Command="{Binding NavigateToAddPacketPageCommand}"></Button>
+            <Button Grid.Column="1" Content="Rozwiąż Quiz!" Command="{Binding NavigateToQuizPageCommand}"></Button>
+            <Button Grid.Column="3" Content="Edytuj swoje zbiory" Command="{Binding NavigateToEditPacketPageCommand}"></Button>
+            <Button Grid.Column="2" Content="Ucz się z fiszkami" Command="{Binding NavigateToFlashCardsCommand}"></Button>
         </Grid>
         <Frame Content="{Binding CurrentViewModel}" Margin="0,40,0,0" NavigationUIVisibility="Hidden"/>
     </Grid>

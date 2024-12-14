@@ -22,15 +22,36 @@
                 </TextBlock>
             </Border>
 
+            <Grid Margin="0,30,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" Padding="20" Width="600" Height="150 ">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="{Binding KeyVal}" Width="300" Style="{StaticResource SemiBoldTB}"/>
+                        <TextBox Text="{Binding UserVal}" Width="300" TextAlignment="Center" Margin="0,0,0,20"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1,0,1,1" Padding="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Zakończ Teraz" Command="{Binding EndQuizCommand}" Visibility="{Binding QEndButVis}" HorizontalAlignment="Left" Padding="20" Background="PaleVioletRed"/>
+                        <Button Grid.Column="2" Content="{Binding QButton}" Command="{Binding NextQuestionCommand}" Background="PaleGreen" HorizontalAlignment="Right" Padding="20"/>
+                    </Grid>
+                </Border>
 
-            <TextBlock Text="{Binding KeyVal}" Width="300" Margin="0,0,0,20" TextAlignment="Center"/>
-            <TextBox Text="{Binding UserVal}" Width="300" TextAlignment="Center" Margin="0,0,0,20"/>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Zakończ Teraz" Command="{Binding EndQuizCommand}" Visibility="{Binding QEndButVis}" Width="100" Background="PaleVioletRed"/>
-                <Button Content="{Binding QButton}" Width="100" Command="{Binding NextQuestionCommand}" Background="PaleGreen"/>
-            </StackPanel>
-            
-         </StackPanel>
+            </Grid>
+        </StackPanel>
 
     </Grid>
 </Page>
