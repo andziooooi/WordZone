@@ -8,47 +8,80 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="QuizResult">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <TextBlock>
-            <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0}/{1}">
-                    <Binding Path="Points"/>
-                    <Binding Path="NumberOfElements"/>
-                </MultiBinding>
-            </TextBlock.Text>
-        </TextBlock>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-            <ListBox ItemsSource="{Binding DictionaryGood}" Width="300" Height="200" Margin="0, 0, 10, 0" Background="PaleGreen">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Key}" />
-                            <TextBlock Text="{Binding Value}" />
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <StackPanel>
+            <StackPanel>
+                <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="0,0,0,10">
+                    <TextBlock Style="{StaticResource HeaderTB}">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}Twój wynik to: {0}/{1}">
+                                <Binding Path="Points"/>
+                                <Binding Path="NumberOfElements"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Border>
+                <Border BorderBrush="Black" BorderThickness="1,1,1,0" Margin="20,0,20,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Poprawne odpowiedzi" Style="{StaticResource SemiBoldTB}"/>
+                            <ListBox ItemsSource="{Binding DictionaryGood}" BorderBrush="black" HorizontalContentAlignment="Center" MinWidth="300" MinHeight="200" Background="PaleGreen">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Margin" Value="0,0,0,2"/>
+                                        <Setter Property="BorderBrush" Value="LightGray"/>
+                                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Key}" Padding="10" FontWeight="SemiBold" FontSize="16" Margin="0"/>
+                                            <TextBlock Text="{Binding Value}" Padding="10" FontWeight="SemiBold" FontSize="14" Margin="0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <ListBox ItemsSource="{Binding DictionaryBad}" Width="300" Height="200" Margin="0, 0, 10, 0" Background="PaleVioletRed">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Key}" />
-                            <TextBlock Text="{Binding Value}" />
+                        <StackPanel Grid.Column="1" Margin="10">
+                            <TextBlock Text="Błędne odpowiedzi" Style="{StaticResource SemiBoldTB}"/>
+                            <ListBox ItemsSource="{Binding DictionaryBad}" BorderBrush="black" HorizontalContentAlignment="Center" MinWidth="300" MinHeight="200" Background="PaleVioletRed">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Margin" Value="0,0,0,2"/>
+                                        <Setter Property="BorderBrush" Value="LightGray"/>
+                                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Key}" Padding="10" FontWeight="Bold" FontSize="16" Margin="0"/>
+                                            <TextBlock Text="{Binding Value}" Padding="10" FontWeight="SemiBold" FontSize="14" Margin="0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                    </Grid>
+                </Border>
+            </StackPanel>
+            <Grid Height="100" Margin="20,0,20,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="2" Content="Spróbuj jeszcze raz!" Command="{Binding ReDoCommand}"/>
+                <Button Grid.Column="0" Content="Wróć do Menu" Command="{Binding BackToMenuCommand}"/>
+                <Button Grid.Column="1" Content="Wybierz inny zbiór" Command="{Binding NewPackCommand}"/>
+            </Grid>
 
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Content="Spróbuj jeszcze raz!" Command="{Binding ReDoCommand}"/>
-            <Button Content="Wróć do Menu" Command="{Binding BackToMenuCommand}"/>
-            <Button Content="Wybierz inny zbiór" Command="{Binding NewPackCommand}"/>
-        </StackPanel>
-    </Grid>
+    </ScrollViewer>
+
 </Page>

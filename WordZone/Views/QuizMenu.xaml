@@ -12,7 +12,7 @@
         <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="0,0,0,10">
             <TextBlock Text="Spróbuj sił w Quizie" Style="{StaticResource HeaderTB}"/>
         </Border>
-        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" Padding="20" Width="600" Height="150" Margin="0,30,0,0">
+        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" Padding="20" Width="600" Height="170" Margin="0,30,0,0">
             <StackPanel>
                 <TextBlock Text="Z jakiego zbioru chcesz quiz?" Style="{StaticResource SemiBoldTB}"/>
                 <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300"/>

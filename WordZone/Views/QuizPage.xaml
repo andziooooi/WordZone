@@ -32,7 +32,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" Padding="20" Width="600" Height="150 ">
+                <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" Padding="20" Width="600" MinHeight="170">
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="{Binding KeyVal}" Width="300" Style="{StaticResource SemiBoldTB}"/>
                         <TextBox Text="{Binding UserVal}" Width="300" TextAlignment="Center" Margin="0,0,0,20"/>
