@@ -8,18 +8,25 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="FlashCards">
 
-    <StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="0,0,0,10">
             <TextBlock Text="Ucz się z fiszkami" Style="{StaticResource HeaderTB}"/>
         </Border>
-
-        <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300"/>
-        <Button Content="Load to Dictionary" Width="300" Height="30" Command="{Binding StartLearningCommand}" Margin="0, 20, 0, 20" />
-        <Button Content="{Binding FCValue}" Command="{Binding FCChangeCommand}"/>
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Poprzednie" Command="{Binding PreviousFCCommand}" Visibility="{Binding PrevVis}"/>
-            <Button Content="Następne" Command="{Binding NextFCCommand}" Visibility="{Binding NextVis}"/>
-        </StackPanel>
-        
-    </StackPanel>
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Padding="20" MaxWidth="700" MinHeight="50" Margin="0,30,0,30">
+            <StackPanel>
+                <TextBlock Text="Z jakiego zbioru chcesz się uczyć?" Style="{StaticResource SemiBoldTB}"/>
+                <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300"/>
+                <Button Content="Rozpocznij nauke!" Width="300" Height="30" Command="{Binding StartLearningCommand}" Margin="0, 20, 0, 20" />
+                <Button Content="{Binding FCValue}"  Command="{Binding FCChangeCommand}" Height="100" FontSize="60"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Content="Poprzednie słowo" Command="{Binding PreviousFCCommand}" Visibility="{Binding PrevVis}"  Margin="-10,0,0,0" Padding="5"/>
+                    <Button Content="Następne słowo" Command="{Binding NextFCCommand}" Visibility="{Binding NextVis}" Margin="15,0,0,0" Padding="5"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
 </Page>
