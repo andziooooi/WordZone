@@ -25,4 +25,33 @@
         <Setter Property="BorderBrush" Value="DarkBlue" />
         <Setter Property="BorderThickness" Value="2" />
     </Style>
+    <Style x:Key="ContentBorder" TargetType="Border">
+        <Setter Property="Grid.Row" Value="0"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="20"/>
+        <Setter Property="MaxWidth" Value="1000"/>
+        <Setter Property="MinWidth" Value="600"/>
+        <Setter Property="Margin" Value="50,30,50,30"/>
+    </Style>
+    <Style x:Key="HeaderBorder" TargetType="Border">
+        <Setter Property="BorderBrush" Value="LightGray"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+    </Style>
+    <Style TargetType="ScrollBar">
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid Background="LightGray" Width="5">
+                        <Track Name="PART_Track" IsDirectionReversed="True">
+                            <Track.Thumb>
+                                <Thumb Background="Black" BorderThickness="0.5" BorderBrush="Black" Width="5"/>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

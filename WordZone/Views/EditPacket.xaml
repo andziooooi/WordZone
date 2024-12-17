@@ -8,13 +8,17 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EditPacket">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Style="{StaticResource HeaderBorder}">
+            <TextBlock Text="Edytuj swoje zbiory" Style="{StaticResource HeaderTB}"/>
+        </Border>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <StackPanel>
-            <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="0,0,0,10">
-                <TextBlock Text="Edytuj swoje zbiory" Style="{StaticResource HeaderTB}"/>
-            </Border>
-            <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" Padding="20" MinWidth="600" MaxWidth="700" MinHeight="50" Margin="0,30,0,0">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Border Style="{StaticResource ContentBorder}">
                 <StackPanel>
                     <TextBlock Text="Jaki zbiór chcesz edytować?" Style="{StaticResource SemiBoldTB}"/>
                     <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300"/>
@@ -57,7 +61,6 @@
                     </Grid>
                 </StackPanel>
             </Border>
-        </StackPanel>
-        
-    </ScrollViewer>
+        </ScrollViewer>
+    </Grid>
 </Page>
