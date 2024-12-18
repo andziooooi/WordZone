@@ -21,7 +21,9 @@
             <Border Style="{StaticResource ContentBorder}">
                 <StackPanel>
                     <TextBlock Text="Jaki zbiór chcesz edytować?" Style="{StaticResource SemiBoldTB}"/>
-                    <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300"/>
+                    <Border HorizontalAlignment="Center" BorderBrush="#8c1a6a" BorderThickness="2">
+                        <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300" BorderThickness="0"/>
+                    </Border>
                     <Button Content="Edytuj" Width="300" Height="30" Command="{Binding StartEditCommand}" Margin="0, 20, 0, 20" />
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -29,7 +31,7 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="1" Padding="10" BorderBrush="Black" BorderThickness="1" Visibility="{Binding UpdateVis}">
+                        <Border Grid.Column="1" Padding="10" BorderBrush="#8c1a6a" BorderThickness="1" Visibility="{Binding UpdateVis}">
                             <StackPanel Name="RecordInputPanel" Margin="0,20,0,0">
                                 <Border BorderBrush="LightGray" BorderThickness="0,0,0,1">
                                     <TextBlock Text="{Binding TableNameEdit}" Style="{StaticResource SemiBoldTB}"/>
@@ -49,7 +51,7 @@
                                                 <TextBox Grid.Column="0" Width="200" HorizontalAlignment="Right" Margin="0,0,10,10" Height="30" Text="{Binding EnglishWord}" />
                                                 <TextBlock Grid.Column="1" Text="—" FontSize="15" FontWeight="Bold" Margin="0,-3,0,0"/>
                                                 <TextBox Grid.Column="2" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" Text="{Binding PolishTranslation}" />
-                                                <Button Grid.Column="2" Width="100" Margin="220,0,0,10" HorizontalAlignment="Left" Content="usuń tłumaczenie" Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding EnglishWord}"/>
+                                                <Button Grid.Column="2" Width="100" Margin="220,0,0,10" HorizontalAlignment="Left" Content="Usuń" Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding EnglishWord}"/>
                                             </Grid>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
