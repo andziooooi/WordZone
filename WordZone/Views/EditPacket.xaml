@@ -21,7 +21,7 @@
             <Border Style="{StaticResource ContentBorder}">
                 <StackPanel>
                     <TextBlock Text="Jaki zbiór chcesz edytować?" Style="{StaticResource SemiBoldTB}"/>
-                    <Border HorizontalAlignment="Center" BorderBrush="#8c1a6a" BorderThickness="2">
+                    <Border HorizontalAlignment="Center" BorderBrush="#1B4332" BorderThickness="2">
                         <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300" BorderThickness="0"/>
                     </Border>
                     <Button Content="Edytuj" Width="300" Height="30" Command="{Binding StartEditCommand}" Margin="0, 20, 0, 20" />
@@ -31,9 +31,9 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="1" Padding="10" BorderBrush="#8c1a6a" BorderThickness="1" Visibility="{Binding UpdateVis}">
+                        <Border Grid.Column="1" Padding="10" BorderBrush="#1B4332" BorderThickness="1" Visibility="{Binding UpdateVis}">
                             <StackPanel Name="RecordInputPanel" Margin="0,20,0,0">
-                                <Border BorderBrush="LightGray" BorderThickness="0,0,0,1">
+                                <Border BorderBrush="#081C15" BorderThickness="0,0,0,1">
                                     <TextBlock Text="{Binding TableNameEdit}" Style="{StaticResource SemiBoldTB}"/>
                                 </Border>
 

@@ -21,7 +21,7 @@
             <Border Style="{StaticResource ContentBorder}">
             <StackPanel>
                 <TextBlock Text="Z jakiego zbioru chcesz się uczyć?" Style="{StaticResource SemiBoldTB}"/>
-                    <Border HorizontalAlignment="Center" BorderBrush="#8c1a6a" BorderThickness="2">
+                    <Border HorizontalAlignment="Center" BorderBrush="#1B4332" BorderThickness="2">
                         <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300" BorderThickness="0"/>
                     </Border>
                     <Button Content="Rozpocznij nauke!" Width="300" Height="30" Command="{Binding StartLearningCommand}" Margin="0, 20, 0, 20" />

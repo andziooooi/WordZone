@@ -30,7 +30,7 @@
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="{Binding KeyVal}" Margin="20,20,20,0" Width="300" Style="{StaticResource SemiBoldTB}"/>
                         <TextBox Text="{Binding UserVal}" Width="300" TextAlignment="Center" Margin="20,20,20,20"/>
-                        <Border BorderBrush="#8c1a6a" BorderThickness="0,1,0,0" Padding="10">
+                        <Border BorderBrush="#1B4332" BorderThickness="0,1,0,0" Padding="10">
                             <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>

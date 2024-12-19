@@ -33,11 +33,11 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Margin="10">
                         <TextBlock Text="Poprawne odpowiedzi" Style="{StaticResource SemiBoldTB}"/>
-                        <ListBox ItemsSource="{Binding DictionaryGood}" BorderBrush="black" HorizontalContentAlignment="Center" MinWidth="300" MinHeight="200" Background="PaleGreen">
+                        <ListBox ItemsSource="{Binding DictionaryGood}" BorderBrush="#1B4332" HorizontalContentAlignment="Center" MinWidth="300" MinHeight="200" Background="PaleGreen">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="Margin" Value="0,0,0,2"/>
-                                    <Setter Property="BorderBrush" Value="LightGray"/>
+                                    <Setter Property="BorderBrush" Value="#1B4332"/>
                                     <Setter Property="BorderThickness" Value="0,0,0,1"/>
                                 </Style>
                             </ListBox.ItemContainerStyle>
@@ -53,11 +53,11 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="10">
                         <TextBlock Text="Błędne odpowiedzi" Style="{StaticResource SemiBoldTB}"/>
-                        <ListBox ItemsSource="{Binding DictionaryBad}" BorderBrush="black" HorizontalContentAlignment="Center" MinWidth="300" MinHeight="200" Background="PaleVioletRed">
+                        <ListBox ItemsSource="{Binding DictionaryBad}" BorderBrush="DarkRed" HorizontalContentAlignment="Center" MinWidth="300" MinHeight="200" Background="PaleVioletRed">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="Margin" Value="0,0,0,2"/>
-                                    <Setter Property="BorderBrush" Value="LightGray"/>
+                                    <Setter Property="BorderBrush" Value="DarkRed"/>
                                     <Setter Property="BorderThickness" Value="0,0,0,1"/>
                                 </Style>
                             </ListBox.ItemContainerStyle>
@@ -74,15 +74,15 @@
                 </Grid>
             </ScrollViewer>
         </Border>
-        <Grid Grid.Row="2" Height="100" Margin="50,0,50,20" MaxWidth="1000">
+        <Grid Grid.Row="2" Height="50" Margin="50,0,50,20" MaxWidth="1000">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="2" Content="Spróbuj jeszcze raz!" Command="{Binding ReDoCommand}"/>
-            <Button Grid.Column="0" Content="Wróć do Menu" Command="{Binding BackToMenuCommand}"/>
-            <Button Grid.Column="1" Content="Wybierz inny zbiór" Command="{Binding NewPackCommand}"/>
+            <Button Grid.Column="2" Content="Spróbuj jeszcze raz!" Command="{Binding ReDoCommand}" Style="{StaticResource ResButton}"/>
+            <Button Grid.Column="0" Content="Wróć do Menu" Command="{Binding BackToMenuCommand}" Style="{StaticResource ResButton}"/>
+            <Button Grid.Column="1" Content="Wybierz inny zbiór" Command="{Binding NewPackCommand}" Style="{StaticResource ResButton}"/>
         </Grid>
 
     </Grid>
