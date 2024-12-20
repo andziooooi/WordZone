@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Services;
 
@@ -65,6 +66,10 @@ namespace WordZone.ViewModels
             {
                 Dictionary = _dataService.CreateDictionary(TableName);
                 _mainWVM.CurrentViewModel = new QuizPVM(TableName,Dictionary,_dataService, _mainWVM);
+            }
+            else
+            {
+                MessageBox.Show("Najpierw trzeba wybrać zbiór");
             }
         }
     }

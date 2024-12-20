@@ -81,16 +81,24 @@ namespace WordZone.ViewModels
 
         private void StartEdit(object obj)
         {
-            Translations = _dataService.GetTranslations(TableName);
-            _initialValue = Translations.Count;
-            TextRows.Clear();
-            foreach (Translation translation in Translations) 
+            if(_tableName != "Wybierz zbiór" && _tableName !=null)
             {
-                TextRows.Add(translation);
+                Translations = _dataService.GetTranslations(TableName);
+                _initialValue = Translations.Count;
+                TextRows.Clear();
+                foreach (Translation translation in Translations)
+                {
+                    TextRows.Add(translation);
+                }
+                TableNameEdit = TableName;
+                OnPropertyChanged(nameof(TableNameEdit));
+                UpdateVis = Visibility.Visible;
             }
-            TableNameEdit = TableName;
-            OnPropertyChanged(nameof(TableNameEdit));
-            UpdateVis = Visibility.Visible;
+            else
+            {
+                MessageBox.Show("Najpierw należy wybrać zbiór!");
+            }
+
         }
         private void UpdateItems(object obj)
         {

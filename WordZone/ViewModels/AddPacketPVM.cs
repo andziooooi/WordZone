@@ -94,6 +94,10 @@ namespace WordZone.ViewModels
                 AddDelButtons = Visibility.Hidden;
                 GenerateRowsVis = Visibility.Visible;
             }
+            else
+            {
+                MessageBox.Show("Wprowadź nazwę zbioru");
+            }
         }
 
     }

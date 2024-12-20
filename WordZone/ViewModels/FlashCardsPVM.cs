@@ -96,11 +96,19 @@ namespace WordZone.ViewModels
 
         private void StartLearning(object obj)
         {
-            _index = 0;
-            Words = _dataService.CreateDictionary(TableName);
-            FCValue = Words.ElementAt(0).Key;
-            _numberofwords = Words.Count;
-            NextVis = Visibility.Visible;
+            if (_tableName != null && _tableName != "Wybierz zbiór")
+            {
+                _index = 0;
+                Words = _dataService.CreateDictionary(TableName);
+                FCValue = Words.ElementAt(0).Key;
+                _numberofwords = Words.Count;
+                NextVis = Visibility.Visible;
+            }
+            else
+            {
+                MessageBox.Show("Najpierw należy wybrać zbiór!");
+            }
+
         }
         private void FCChange(object obj)
         {
