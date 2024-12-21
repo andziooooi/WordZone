@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Services;
@@ -12,6 +13,7 @@ namespace WordZone.ViewModels
         private MainWVM _mainWVM;
         private string _tableName;
         private List<string> _tableNamesList;
+        private bool _polEngCB;
 
         public ICommand StartQuizCommand {get;}
         public string TableName
@@ -41,12 +43,22 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
+        public bool PolEngCB
+        {
+            get { return _polEngCB; }
+            set 
+            { 
+                _polEngCB = value; 
+                OnPropertyChanged(); 
+            }
+        }
 
         public QuizMenuPVM(string tablename,DataService ds,MainWVM mainWVM)
         {
             _dictionary = new Dictionary<string, string>();
             _dataService = ds;
             _mainWVM = mainWVM;
+            _polEngCB = false;
             _tableNamesList = _dataService.GetTablesName();
             if (tablename == "") 
             {
@@ -62,9 +74,9 @@ namespace WordZone.ViewModels
 
         private void StartQuiz(object obj)
         {
-            if (TableName != "Wybierz zbiór")
+            if (TableName != "Wybierz zbiór" &&TableName !=null)
             {
-                Dictionary = _dataService.CreateDictionary(TableName);
+                Dictionary = _dataService.CreateDictionary(TableName,PolEngCB);
                 _mainWVM.CurrentViewModel = new QuizPVM(TableName,Dictionary,_dataService, _mainWVM);
             }
             else

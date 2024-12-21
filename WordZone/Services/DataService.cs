@@ -42,14 +42,24 @@ namespace WordZone.Services
                 return er;
             }
         }
-        public Dictionary<string,string> CreateDictionary(string tableName)
+        public Dictionary<string,string> CreateDictionary(string tableName,bool PolEngCB)
         {
 
             if (!string.IsNullOrEmpty(tableName))
             {
-                var translations = GetTranslations(tableName);
-                Dictionary<string, string> Dictionary = translations.ToDictionary(t => t.EnglishWord, t => t.PolishTranslation);
-                return Dictionary;
+                if (PolEngCB) 
+                {
+                    var translations = GetTranslations(tableName);
+                    Dictionary<string, string> Dictionary = translations.ToDictionary(t => t.PolishTranslation, t => t.EnglishWord);
+                    return Dictionary;
+                }
+                else
+                {
+                    var translations = GetTranslations(tableName);
+                    Dictionary<string, string> Dictionary = translations.ToDictionary(t => t.EnglishWord, t => t.PolishTranslation);
+                    return Dictionary;
+                }
+
             }
             else
             {

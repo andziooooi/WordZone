@@ -14,6 +14,7 @@ namespace WordZone.ViewModels
         private string _fcValue;
         private int _index;
         private int _numberofwords;
+        private bool _polEngCB;
         private Visibility _prevVis;
         private Visibility _nextVis;
 
@@ -76,11 +77,21 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
+        public bool PolEngCB
+        {
+            get { return _polEngCB; }
+            set
+            {
+                _polEngCB = value;
+                OnPropertyChanged();
+            }
+        }
         public FlashCardsPVM(DataService ds)
         {
             _dataService = ds;
             _tableNamesList = _dataService.GetTablesName();
             _words = new Dictionary<string, string>();
+            _polEngCB = false;
             _tableName = "Wybierz zbiór";
             _fcValue = "";
             _nextVis = Visibility.Hidden;
@@ -92,6 +103,7 @@ namespace WordZone.ViewModels
             NextFCCommand = new RelayCommand(NextFC);
             PreviousFCCommand = new RelayCommand(PreviousFC);
 
+
         }
 
         private void StartLearning(object obj)
@@ -99,7 +111,7 @@ namespace WordZone.ViewModels
             if (_tableName != null && _tableName != "Wybierz zbiór")
             {
                 _index = 0;
-                Words = _dataService.CreateDictionary(TableName);
+                Words = _dataService.CreateDictionary(TableName,PolEngCB);
                 FCValue = Words.ElementAt(0).Key;
                 _numberofwords = Words.Count;
                 NextVis = Visibility.Visible;

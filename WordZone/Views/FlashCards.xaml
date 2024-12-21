@@ -21,10 +21,11 @@
             <Border Style="{StaticResource ContentBorder}">
             <StackPanel>
                 <TextBlock Text="Z jakiego zbioru chcesz się uczyć?" Style="{StaticResource SemiBoldTB}"/>
-                    <Border HorizontalAlignment="Center" BorderBrush="#1B4332" BorderThickness="2">
+                <Border HorizontalAlignment="Center" BorderBrush="#1B4332" BorderThickness="2">
                         <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300" BorderThickness="0"/>
-                    </Border>
-                    <Button Content="Rozpocznij nauke!" Width="300" Height="30" Command="{Binding StartLearningCommand}" Margin="0, 20, 0, 20" />
+                </Border>
+                <CheckBox Content="Z polskiego na angielski" IsChecked="{Binding PolEngCB}" HorizontalAlignment="Center"/>
+                <Button Content="Rozpocznij nauke!" Width="300" Height="30" Command="{Binding StartLearningCommand}" Margin="0, 20, 0, 20" />
                 <Button Content="{Binding FCValue}"  Command="{Binding FCChangeCommand}"  Height="100" FontSize="60"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                     <Button Content="Poprzednie słowo" Command="{Binding PreviousFCCommand}" Visibility="{Binding PrevVis}"  Margin="-10,0,0,0" Padding="5"/>

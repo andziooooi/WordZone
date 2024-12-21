@@ -22,6 +22,7 @@
                 <Border HorizontalAlignment="Center" BorderBrush="#1B4332" BorderThickness="2">
                     <ComboBox ItemsSource="{Binding TableNamesList}" SelectedItem="{Binding TableName, Mode=TwoWay}" Width="300" BorderThickness="0"/>
                 </Border>
+                <CheckBox Content="Z polskiego na angielski" IsChecked="{Binding PolEngCB}" HorizontalAlignment="Center"/>
                 <Button Content="Startujemy Quiz!!" Width="300" Height="30" Command="{Binding StartQuizCommand}" Margin="0, 20, 0, 20" />
             </StackPanel>
         </Border>
