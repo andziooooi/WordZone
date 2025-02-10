@@ -10,7 +10,7 @@ namespace WordZone.ViewModels
         private Dictionary<string, string> _dictionary;
         private Dictionary<string, string> _dictionaryBad;
         private Dictionary<string, string> _dictionaryGood;
-        private string _tableName;
+        private string _packetName;
 
         public ICommand BackToMenuCommand { get; }
         public ICommand ReDoCommand { get; }
@@ -37,9 +37,9 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public QuizResultPVM(string tablename,List<int> listOfBad,Dictionary<string,string> dict,MainWVM mainWVM,int points)
+        public QuizResultPVM(string packetname,List<int> listOfBad,Dictionary<string,string> dict,MainWVM mainWVM,int points)
         {
-            _tableName = tablename;
+            _packetName = packetname;
             _mainWVM = mainWVM;
             _listOfBad = listOfBad;
             _dictionary = dict;
@@ -80,7 +80,7 @@ namespace WordZone.ViewModels
         }
         private void ReDo(object obj)
         {
-            _mainWVM.QRe(_tableName);
+            _mainWVM.QRe(_packetName);
         }
         private void BackToMenu(object obj)
         {

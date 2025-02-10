@@ -11,17 +11,17 @@ namespace WordZone.ViewModels
         private Dictionary<string, string> _dictionary;
         private DataService _dataService;
         private MainWVM _mainWVM;
-        private string _tableName;
-        private List<string> _tableNamesList;
+        private string _packetName;
+        private List<string> _packetNamesList;
         private bool _polEngCB;
 
         public ICommand StartQuizCommand {get;}
-        public string TableName
+        public string PacketName
         {
-            get { return _tableName; }
+            get { return _packetName; }
             set
             {
-                _tableName = value;
+                _packetName = value;
                 OnPropertyChanged();
             }
         }
@@ -34,12 +34,12 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public List<string> TableNamesList
+        public List<string> PacketNamesList
         {
-            get { return _tableNamesList; }
+            get { return _packetNamesList; }
             set
             {
-                _tableNamesList = value;
+                _packetNamesList = value;
                 OnPropertyChanged();
             }
         }
@@ -53,20 +53,20 @@ namespace WordZone.ViewModels
             }
         }
 
-        public QuizMenuPVM(string tablename,DataService ds,MainWVM mainWVM)
+        public QuizMenuPVM(string packetname,DataService ds,MainWVM mainWVM)
         {
             _dictionary = new Dictionary<string, string>();
             _dataService = ds;
             _mainWVM = mainWVM;
             _polEngCB = false;
-            _tableNamesList = _dataService.GetTablesName();
-            if (tablename == "") 
+            _packetNamesList = _dataService.GetPacketsNames();
+            if (packetname == "") 
             {
-                _tableName="Wybierz zbiór";
+                _packetName="Wybierz zbiór";
             }
             else
             {
-                _tableName = tablename;
+                _packetName = packetname;
             }
                 StartQuizCommand = new RelayCommand(StartQuiz);
 
@@ -74,10 +74,10 @@ namespace WordZone.ViewModels
 
         private void StartQuiz(object obj)
         {
-            if (TableName != "Wybierz zbiór" &&TableName !=null)
+            if (PacketName != "Wybierz zbiór" &&PacketName !=null)
             {
-                Dictionary = _dataService.CreateDictionary(TableName,PolEngCB);
-                _mainWVM.CurrentViewModel = new QuizPVM(TableName,Dictionary,_dataService, _mainWVM);
+                Dictionary = _dataService.CreateDictionary(PacketName,PolEngCB);
+                _mainWVM.CurrentViewModel = new QuizPVM(PacketName,Dictionary,_dataService, _mainWVM);
             }
             else
             {

@@ -7,8 +7,8 @@ namespace WordZone.ViewModels
 {
     public class FlashCardsPVM : BaseVM
     {
-        private string _tableName;
-        private List<string> _tableNamesList;
+        private string _packetName;
+        private List<string> _packetNamesList;
         private DataService _dataService;
         private Dictionary<string, string> _words;
         private string _fcValue;
@@ -32,12 +32,12 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public List<string> TableNamesList
+        public List<string> PacketNamesList
         {
-            get { return _tableNamesList; }
+            get { return _packetNamesList; }
             set
             {
-                _tableNamesList = value;
+                _packetNamesList = value;
                 OnPropertyChanged();
             }
         }
@@ -50,12 +50,12 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public string TableName
+        public string PacketName
         {
-            get { return _tableName; }
+            get { return _packetName; }
             set
             {
-                _tableName = value;
+                _packetName = value;
                 OnPropertyChanged();
             }
         }
@@ -89,10 +89,10 @@ namespace WordZone.ViewModels
         public FlashCardsPVM(DataService ds)
         {
             _dataService = ds;
-            _tableNamesList = _dataService.GetTablesName();
+            _packetNamesList = _dataService.GetPacketsNames();
             _words = new Dictionary<string, string>();
             _polEngCB = false;
-            _tableName = "Wybierz zbiór";
+            _packetName = "Wybierz zbiór";
             _fcValue = "";
             _nextVis = Visibility.Hidden;
             _prevVis = Visibility.Hidden;
@@ -108,10 +108,10 @@ namespace WordZone.ViewModels
 
         private void StartLearning(object obj)
         {
-            if (_tableName != null && _tableName != "Wybierz zbiór")
+            if (_packetName != null && _packetName != "Wybierz zbiór")
             {
                 _index = 0;
-                Words = _dataService.CreateDictionary(TableName,PolEngCB);
+                Words = _dataService.CreateDictionary(PacketName,PolEngCB);
                 FCValue = Words.ElementAt(0).Key;
                 _numberofwords = Words.Count;
                 NextVis = Visibility.Visible;

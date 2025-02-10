@@ -12,50 +12,61 @@ namespace WordZone.Services
         {
             _context = dbContext;
         }
-        public void CreateTable(string tableName,ObservableCollection<Translation> translations)
+        public void AddTranslations(string packetName, IEnumerable<Translation> translations)
         {
-            string sql = $@"
-            CREATE TABLE IF NOT EXISTS [{tableName}] (
-                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                EnglishWord TEXT NOT NULL,
-                PolishTranslation TEXT NOT NULL
-            )";
-
-            _context.Database.ExecuteSqlRaw(sql);
-            foreach (var translation in translations)
+            if (string.IsNullOrEmpty(packetName) || translations == null)
             {
-                string sqlcommand = $@"INSERT INTO [{tableName}] (EnglishWord, PolishTranslation) VALUES ('{translation.EnglishWord}','{translation.PolishTranslation}')";
-                _context.Database.ExecuteSqlRaw(sqlcommand);
+                return;
             }
-        }
-        public List<Translation> GetTranslations(string tableName)
-        {
-            if (!string.IsNullOrEmpty(tableName))
+
+            var packet = _context.Packets.Include(p => p.Translations)
+                          .FirstOrDefault(p => p.PacketName == packetName);
+
+            if (packet == null)
             {
-                var translations = _context.Translations.FromSqlRaw($"SELECT * FROM {tableName}").AsNoTracking().ToList();
+                packet = new Packet { PacketName = packetName, Translations = new List<Translation>() };
+                _context.Packets.Add(packet);
+            }
+
+            var validTranslations = translations
+                .Where(t => !string.IsNullOrEmpty(t.PolishTranslation) && !string.IsNullOrEmpty(t.EnglishWord))
+                .ToList();
+
+            packet.Translations.AddRange(validTranslations);
+            _context.SaveChanges();
+        }
+        public List<Translation> GetTranslations(string packetName)
+        {
+            if (!string.IsNullOrEmpty(packetName))
+            {
+                var packet =  _context.Packets.Where(packet =>  packet.PacketName == packetName).FirstOrDefault();
+                if (packet == null) 
+                {
+                    return null!;
+                }
+                var translations = _context.Translations.Where(item => item.PacketID == packet.ID).ToList();
                 return translations;
             }
             else
             {
                 List<Translation> er = new List<Translation>();
-                er.Add(new Translation("error", "error"));
                 return er;
             }
         }
-        public Dictionary<string,string> CreateDictionary(string tableName,bool PolEngCB)
+        public Dictionary<string,string> CreateDictionary(string packetName,bool PolEngCB)
         {
 
-            if (!string.IsNullOrEmpty(tableName))
+            if (!string.IsNullOrEmpty(packetName))
             {
                 if (PolEngCB) 
                 {
-                    var translations = GetTranslations(tableName);
+                    var translations = GetTranslations(packetName);
                     Dictionary<string, string> Dictionary = translations.ToDictionary(t => t.PolishTranslation, t => t.EnglishWord);
                     return Dictionary;
                 }
                 else
                 {
-                    var translations = GetTranslations(tableName);
+                    var translations = GetTranslations(packetName);
                     Dictionary<string, string> Dictionary = translations.ToDictionary(t => t.EnglishWord, t => t.PolishTranslation);
                     return Dictionary;
                 }
@@ -69,63 +80,55 @@ namespace WordZone.Services
             }
             
         }
-        public List<string> GetTablesName()
+        public List<string> GetPacketsNames()
         {
-            string sql = @"SELECT name from sqlite_master where type ='table'";
-            var tables = _context.TableNames.FromSqlRaw(sql).AsNoTracking().ToList();
-            tables.RemoveAt(0);
-            List<string> tablesName = new List<string>();
-            tablesName.Add("Wybierz zbiór");
-            foreach (var table in tables) 
+            var packets = _context.Packets.ToList();
+            var res = new List<string>();
+            foreach(var packet in packets)
             {
-                tablesName.Add(table.Name);
-            }
-            
-            return tablesName;
+                res.Add(packet.PacketName);
+            }            
+            return res;
         }
 
-        public void UpdateTable(ObservableCollection<Translation> translation, string tableName,int initialvalue)
+        public void UpdatePacket(ObservableCollection<Translation> translations, string packetName)
         {
-            if (!string.IsNullOrEmpty(tableName))
+            if (!string.IsNullOrEmpty(packetName))
             {
-                string sql = "";
-                for (int i = 0; i < translation.Count; i++)
+                var packet = _context.Packets.FirstOrDefault(item => item.PacketName == packetName);
+
+                if (packet is null)
                 {
-                    if(i<initialvalue)
-                    {
-                        sql = $@"UPDATE {tableName} SET EnglishWord = '{translation[i].EnglishWord}', PolishTranslation = '{translation[i].PolishTranslation}' WHERE Id = {translation[i].Id};";
-                        _context.Database.ExecuteSqlRaw(sql);
-                    }
-                    else if (!string.IsNullOrEmpty(translation[i].EnglishWord))
-                    {
-                         sql = $@"INSERT INTO [{tableName}] (EnglishWord, PolishTranslation) VALUES ('{translation[i].EnglishWord}','{translation[i].PolishTranslation}')";
-                        _context.Database.ExecuteSqlRaw(sql);
-                    }
+                    return;
                 }
+
+                var translationsToRemove = _context.Translations.Where(item => item.PacketID == packet.ID);
+                _context.Translations.RemoveRange(translationsToRemove);
+
+                var toInsert = translations.Select(item => new Translation
+                {
+                    EnglishWord = item.EnglishWord,
+                    PolishTranslation = item.PolishTranslation,
+                    PacketID = packet.ID
+                }).Where(item => item.EnglishWord != null && item.PolishTranslation !=null);
+
+                _context.Translations.AddRange(toInsert);
+                _context.SaveChanges();
             }
         }
-        public void DeleteRow(string eng, string tableName)
+        public void DeleteRow(int translationID)
         {
-            string sql = $@"DELETE FROM {tableName} where EnglishWord = '{eng}'";
-            _context.Database.ExecuteSqlRaw(sql);
+            var ToRemove = _context.Translations.FirstOrDefault(item => item.ID == translationID);
+            _context.Translations.Remove(ToRemove);
         }
-        public void DropTable(string tableName)
+        public void DeletePacket(string packetName)
         {
-            string sql = $@"DROP TABLE {tableName}";
-            _context.Database.ExecuteSqlRaw(sql);
-        }
-        public int CountRows(string tableName)
-        {
-            if (!string.IsNullOrEmpty(tableName))
-            {
-                string sql = $@"select count(*) from {tableName}";
-                int result = Convert.ToInt32(_context.Database.ExecuteSqlRaw(sql));
-                return result;
-            }
-            else
-            {
-                return 0;
-            }
+            var packet = _context.Packets.FirstOrDefault(item => item.PacketName == packetName);
+            if (packet is null) { return; }
+            var translationsToDelete = _context.Translations.Where(item => item.PacketID == packet.ID);
+            _context.Translations.RemoveRange(translationsToDelete);
+            _context.Packets.Remove(packet);
+            _context.SaveChanges();
         }
     }
 }

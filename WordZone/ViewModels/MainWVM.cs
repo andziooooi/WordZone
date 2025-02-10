@@ -42,17 +42,17 @@ namespace WordZone.ViewModels
         {
             CurrentViewModel = new AddPacketPVM(_dataService,this);
         }
-        private void NavigateToQuizPage(string Table)
+        private void NavigateToQuizPage(string Packet)
         {
-            CurrentViewModel = new QuizMenuPVM(Table,_dataService,this);
+            CurrentViewModel = new QuizMenuPVM(Packet,_dataService,this);
         }
         private void NavigateToEditPacketPage()
         {
             CurrentViewModel = new EditPacketVM(_dataService);
         }
-        public void QRe(string Table)
+        public void QRe(string Packet)
         {
-            NavigateToQuizPage(Table);
+            NavigateToQuizPage(Packet);
         }
     }
 }

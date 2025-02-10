@@ -10,12 +10,12 @@ namespace WordZone.ViewModels
     public class EditPacketVM : BaseVM
     {
         private DataService _dataService;
-        private List<string> _tableNamesList;
-        private string _tableName;
+        private List<string> _packetNamesList;
+        private string _packetName;
         private List<Translation> _translations;
         private Visibility _updateVis;
         private int _initialValue;
-        public string TableNameEdit { get; set; }
+        public string PacketNameEdit { get; set; }
         public ObservableCollection<Translation> TextRows {  get; set; }
         public Visibility UpdateVis
         {
@@ -35,22 +35,22 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public string TableName
+        public string PacketName
         {
-            get { return _tableName; }
+            get { return _packetName; }
             set
             {
-                _tableName = value;
+                _packetName = value;
                 OnPropertyChanged();
             }
         }
 
-        public List<string> TableNamesList
+        public List<string> PacketNamesList
         {
-            get { return _tableNamesList; }
+            get { return _packetNamesList; }
             set
             {
-                _tableNamesList = value;
+                _packetNamesList = value;
                 OnPropertyChanged();
             }
         }
@@ -64,13 +64,13 @@ namespace WordZone.ViewModels
         {
             _dataService = ds;
 
-            _tableNamesList = _dataService.GetTablesName();
-            _tableName = "Wybierz zbiór";
+            _packetNamesList = _dataService.GetPacketsNames();
+            _packetName = "Wybierz zbiór";
             _translations = new List<Translation>();
             TextRows = new ObservableCollection<Translation>();
             _updateVis = Visibility.Hidden;
             _initialValue = 0;
-            TableNameEdit = TableName;
+            PacketNameEdit = PacketName;
 
             StartEditCommand = new RelayCommand(StartEdit);
             UpdateItemsCommand = new RelayCommand(UpdateItems);
@@ -81,17 +81,17 @@ namespace WordZone.ViewModels
 
         private void StartEdit(object obj)
         {
-            if(_tableName != "Wybierz zbiór" && _tableName !=null)
+            if(_packetName != "Wybierz zbiór" && _packetName !=null)
             {
-                Translations = _dataService.GetTranslations(TableName);
+                Translations = _dataService.GetTranslations(PacketName);
                 _initialValue = Translations.Count;
                 TextRows.Clear();
                 foreach (Translation translation in Translations)
                 {
                     TextRows.Add(translation);
                 }
-                TableNameEdit = TableName;
-                OnPropertyChanged(nameof(TableNameEdit));
+                PacketNameEdit = PacketName;
+                OnPropertyChanged(nameof(PacketNameEdit));
                 UpdateVis = Visibility.Visible;
             }
             else
@@ -102,28 +102,29 @@ namespace WordZone.ViewModels
         }
         private void UpdateItems(object obj)
         {
-            _dataService.UpdateTable(TextRows, TableName,_initialValue);
+            _dataService.UpdatePacket(TextRows, PacketName);
             TextRows.Clear();
             UpdateVis = Visibility.Hidden;
         }
         private void AddRow(object obj)
         {
-            TextRows.Add(new Translation("",""));
+            TextRows.Add(new Translation());
         }
         private void DeleteRow(object obj)
         {
-            string Eng = obj.ToString();
-            _dataService.UpdateTable(TextRows,TableName,_initialValue);
-            _dataService.DeleteRow(Eng, TableName);
-            StartEdit(null);
+            int translationID = Convert.ToInt32(obj);
+            //_dataService.UpdatePacket(TextRows, PacketName);
+            _dataService.DeleteRow(translationID);
+            var rowToRemove = TextRows.FirstOrDefault(t => t.ID == translationID);
+            TextRows.Remove(rowToRemove);
         }
         private void DeletePacket(object obj)
         {
-            _dataService.DropTable(TableName);
+            _dataService.DeletePacket(PacketName);
             TextRows.Clear();
             UpdateVis = Visibility.Hidden;
-            TableNamesList = _dataService.GetTablesName();
-            TableName = "Wybierz zbiór";
+            PacketNamesList = _dataService.GetPacketsNames();
+            PacketName = "Wybierz zbiór";
 
         }
 

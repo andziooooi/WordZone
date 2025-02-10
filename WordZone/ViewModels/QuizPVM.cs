@@ -8,7 +8,7 @@ namespace WordZone.ViewModels
     public class QuizPVM : BaseVM
     {
         private MainWVM _mainViewModel;
-        private string _tableName;
+        private string _packetName;
         private List<int> ListOfBad;
         private int _currentIndex;
         private int _currentIndexDisp;
@@ -93,7 +93,7 @@ namespace WordZone.ViewModels
         }
 
 
-        public QuizPVM(string tableName,Dictionary<string,string> dictionary,DataService ds, MainWVM mainWVM)
+        public QuizPVM(string packetName,Dictionary<string,string> dictionary,DataService ds, MainWVM mainWVM)
         {
             _mainViewModel = mainWVM;
             _dataService = ds;
@@ -108,7 +108,7 @@ namespace WordZone.ViewModels
             _points = 0;
             ListOfBad = new List<int>();
             _qEndButVis = Visibility.Visible;
-            _tableName = tableName;
+            _packetName = packetName;
 
             //commands
             NextQuestionCommand = new RelayCommand(NextQuestion);
@@ -142,7 +142,7 @@ namespace WordZone.ViewModels
             }
             else
             {
-                _mainViewModel.CurrentViewModel = new QuizResultPVM(_tableName,ListOfBad, Dictionary, _mainViewModel,_points);
+                _mainViewModel.CurrentViewModel = new QuizResultPVM(_packetName,ListOfBad, Dictionary, _mainViewModel,_points);
             }
         }
 
@@ -159,7 +159,7 @@ namespace WordZone.ViewModels
                 _currentIndex++;
             }
 
-            _mainViewModel.CurrentViewModel = new QuizResultPVM(_tableName,ListOfBad, Dictionary, _mainViewModel,_points);
+            _mainViewModel.CurrentViewModel = new QuizResultPVM(_packetName,ListOfBad, Dictionary, _mainViewModel,_points);
         }
 
     }

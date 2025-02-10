@@ -9,7 +9,7 @@ namespace WordZone.ViewModels
 {
     public class AddPacketPVM : BaseVM
     {
-        private string _tableName;
+        private string _packetName;
         private MainWVM _mainViewModel;
         private Visibility _addDelButtons;
         private Visibility _generateRowsVis;
@@ -41,12 +41,12 @@ namespace WordZone.ViewModels
                 OnPropertyChanged();
             }
         }
-        public string TableName
+        public string PacketName
         {
-            get { return _tableName; }
+            get { return _packetName; }
             set
             {
-                _tableName = value;
+                _packetName = value;
                 OnPropertyChanged();
             }
         }
@@ -55,7 +55,7 @@ namespace WordZone.ViewModels
             _mainViewModel = mainWVM;
             _dataService = ds;
 
-            _tableName = "";
+            _packetName = "";
             _addDelButtons = Visibility.Hidden;
             _generateRowsVis = Visibility.Visible;
             TextRows = new ObservableCollection<Translation>();
@@ -86,11 +86,11 @@ namespace WordZone.ViewModels
         }
         private void MakePacket(object obj)
         {
-            if (!string.IsNullOrEmpty(TableName))
+            if (!string.IsNullOrEmpty(PacketName))
             {
-                _dataService.CreateTable(TableName,TextRows);
+                _dataService.AddTranslations(PacketName,TextRows);
                 TextRows.Clear() ;
-                TableName = "";
+                PacketName = "";
                 AddDelButtons = Visibility.Hidden;
                 GenerateRowsVis = Visibility.Visible;
             }
