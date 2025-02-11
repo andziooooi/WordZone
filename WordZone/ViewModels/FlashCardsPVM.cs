@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Services;
@@ -57,6 +58,7 @@ namespace WordZone.ViewModels
             {
                 _packetName = value;
                 OnPropertyChanged();
+                ResetView();
             }
         }
         public Visibility PrevVis
@@ -84,6 +86,7 @@ namespace WordZone.ViewModels
             {
                 _polEngCB = value;
                 OnPropertyChanged();
+                ResetView();
             }
         }
         public FlashCardsPVM(DataService ds)
@@ -110,11 +113,21 @@ namespace WordZone.ViewModels
         {
             if (_packetName != null && _packetName != "Wybierz zbiór")
             {
+
                 _index = 0;
                 Words = _dataService.CreateDictionary(PacketName,PolEngCB);
                 FCValue = Words.ElementAt(0).Key;
                 _numberofwords = Words.Count;
-                NextVis = Visibility.Visible;
+                Debug.WriteLine(_numberofwords);
+                if (_numberofwords != 1) 
+                {
+                    NextVis = Visibility.Visible;
+                }
+                else
+                {
+                    NextVis = Visibility.Hidden;
+                }
+                
             }
             else
             {
@@ -152,6 +165,12 @@ namespace WordZone.ViewModels
                 PrevVis = Visibility.Hidden;
             }
             FCValue = Words.ElementAt(_index).Key;
+        }
+        private void ResetView()
+        {
+            FCValue = "";
+            NextVis = Visibility.Hidden;
+            PrevVis = Visibility.Hidden;
         }
 
     }

@@ -40,10 +40,7 @@ namespace WordZone.Services
             if (!string.IsNullOrEmpty(packetName))
             {
                 var packet =  _context.Packets.Where(packet =>  packet.PacketName == packetName).FirstOrDefault();
-                if (packet == null) 
-                {
-                    return null!;
-                }
+                if (packet == null) { return null!; }
                 var translations = _context.Translations.Where(item => item.PacketID == packet.ID).ToList();
                 return translations;
             }
@@ -96,13 +93,11 @@ namespace WordZone.Services
             if (!string.IsNullOrEmpty(packetName))
             {
                 var packet = _context.Packets.FirstOrDefault(item => item.PacketName == packetName);
-
-                if (packet is null)
-                {
-                    return;
-                }
+                if (packet is null) { return; }
 
                 var translationsToRemove = _context.Translations.Where(item => item.PacketID == packet.ID);
+                if (!translationsToRemove.Any()) { return; }
+
                 _context.Translations.RemoveRange(translationsToRemove);
 
                 var toInsert = translations.Select(item => new Translation
@@ -111,6 +106,7 @@ namespace WordZone.Services
                     PolishTranslation = item.PolishTranslation,
                     PacketID = packet.ID
                 }).Where(item => item.EnglishWord != null && item.PolishTranslation !=null);
+                if (!toInsert.Any()) { return; }
 
                 _context.Translations.AddRange(toInsert);
                 _context.SaveChanges();
@@ -119,13 +115,18 @@ namespace WordZone.Services
         public void DeleteRow(int translationID)
         {
             var ToRemove = _context.Translations.FirstOrDefault(item => item.ID == translationID);
+            if (ToRemove is null) {  return; }
+
             _context.Translations.Remove(ToRemove);
         }
         public void DeletePacket(string packetName)
         {
             var packet = _context.Packets.FirstOrDefault(item => item.PacketName == packetName);
             if (packet is null) { return; }
+
             var translationsToDelete = _context.Translations.Where(item => item.PacketID == packet.ID);
+            if (!translationsToDelete.Any()) { return; }
+
             _context.Translations.RemoveRange(translationsToDelete);
             _context.Packets.Remove(packet);
             _context.SaveChanges();
