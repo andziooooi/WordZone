@@ -65,7 +65,7 @@ namespace WordZone.ViewModels
             _dataService = ds;
 
             _packetNamesList = _dataService.GetPacketsNames();
-            _packetName = "Wybierz zbiór";
+            _packetName = _packetNamesList[0];
             _translations = new List<Translation>();
             TextRows = new ObservableCollection<Translation>();
             _updateVis = Visibility.Hidden;
@@ -81,7 +81,7 @@ namespace WordZone.ViewModels
 
         private void StartEdit(object obj)
         {
-            if(_packetName != "Wybierz zbiór" && _packetName !=null)
+            if(_packetName !=null)
             {
                 Translations = _dataService.GetTranslations(PacketName);
                 _initialValue = Translations.Count;
@@ -102,6 +102,16 @@ namespace WordZone.ViewModels
         }
         private void UpdateItems(object obj)
         {
+            if (TextRows.GroupBy(t => t.EnglishWord).Any(g => g.Count() > 1))
+            {
+                MessageBox.Show("Słowa po angielsku nie mogą się powtarzać!");
+                return;
+            }
+            if (TextRows.GroupBy(t => t.PolishTranslation).Any(g => g.Count() > 1))
+            {
+                MessageBox.Show("Słowa po polsku nie mogą się powtarzać!");
+                return;
+            }
             _dataService.UpdatePacket(TextRows, PacketName);
             TextRows.Clear();
             UpdateVis = Visibility.Hidden;
@@ -124,8 +134,7 @@ namespace WordZone.ViewModels
             TextRows.Clear();
             UpdateVis = Visibility.Hidden;
             PacketNamesList = _dataService.GetPacketsNames();
-            PacketName = "Wybierz zbiór";
-
+            PacketName = PacketNamesList[0];
         }
 
     }

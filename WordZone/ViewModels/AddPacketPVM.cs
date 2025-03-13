@@ -86,10 +86,20 @@ namespace WordZone.ViewModels
         }
         private void MakePacket(object obj)
         {
+            if (TextRows.GroupBy(t => t.EnglishWord).Any(g => g.Count() > 1))
+            {
+                MessageBox.Show("Słowa po angielsku nie mogą się powtarzać!");
+                return;
+            }
+            if (TextRows.GroupBy(t => t.PolishTranslation).Any(g => g.Count() > 1))
+            {
+                MessageBox.Show("Słowa po polsku nie mogą się powtarzać!");
+                return;
+            }
             if (!string.IsNullOrEmpty(PacketName))
             {
-                _dataService.AddTranslations(PacketName,TextRows);
-                TextRows.Clear() ;
+                _dataService.AddTranslations(PacketName, TextRows);
+                TextRows.Clear();
                 PacketName = "";
                 AddDelButtons = Visibility.Hidden;
                 GenerateRowsVis = Visibility.Visible;

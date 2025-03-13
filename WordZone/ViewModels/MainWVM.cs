@@ -25,14 +25,15 @@ namespace WordZone.ViewModels
 
 
 
-        public MainWVM(DataService dataService)
+        public MainWVM(DataService dataService, object currentVM)
         {
+            _dataService = dataService;
+            _currentViewModel = currentVM;
 
             NavigateToAddPacketPageCommand = new RelayCommand(_ => NavigateAddPacketPage());
             NavigateToQuizPageCommand = new RelayCommand(_ => NavigateToQuizPage(""));
             NavigateToEditPacketPageCommand = new RelayCommand(_ => NavigateToEditPacketPage());
             NavigateToFlashCardsCommand = new RelayCommand(_ => NavigateToFlashCards());
-            _dataService = dataService;
         }
         private void NavigateToFlashCards()
         {

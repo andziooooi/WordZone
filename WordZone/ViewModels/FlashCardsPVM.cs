@@ -93,9 +93,9 @@ namespace WordZone.ViewModels
         {
             _dataService = ds;
             _packetNamesList = _dataService.GetPacketsNames();
+            _packetName = _packetNamesList[0];
             _words = new Dictionary<string, string>();
             _polEngCB = false;
-            _packetName = "Wybierz zbiór";
             _fcValue = "";
             _nextVis = Visibility.Hidden;
             _prevVis = Visibility.Hidden;
@@ -111,29 +111,29 @@ namespace WordZone.ViewModels
 
         private void StartLearning(object obj)
         {
-            if (_packetName != null && _packetName != "Wybierz zbiór")
+            if (PacketName == null)
             {
-
-                _index = 0;
-                Words = _dataService.CreateDictionary(PacketName,PolEngCB);
-                FCValue = Words.ElementAt(0).Key;
-                _numberofwords = Words.Count;
-                Debug.WriteLine(_numberofwords);
-                if (_numberofwords != 1) 
-                {
-                    NextVis = Visibility.Visible;
-                }
-                else
-                {
-                    NextVis = Visibility.Hidden;
-                }
-                
+                MessageBox.Show("Najpierw trzeba wybrać zbiór");
+                return;
+            }
+            var check = _dataService.GetTranslations(PacketName);
+            if (check.Count ==0)
+            {
+                MessageBox.Show("Brak tłumaczeń w zbiorze");
+                return;
+            }
+            _index = 0;
+            Words = _dataService.CreateDictionary(PacketName, PolEngCB);
+            FCValue = Words.ElementAt(0).Key;
+            _numberofwords = Words.Count;
+            if (_numberofwords != 1)
+            {
+                NextVis = Visibility.Visible;
             }
             else
             {
-                MessageBox.Show("Najpierw należy wybrać zbiór!");
+                NextVis = Visibility.Hidden;
             }
-
         }
         private void FCChange(object obj)
         {

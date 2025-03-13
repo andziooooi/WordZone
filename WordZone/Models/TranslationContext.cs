@@ -17,9 +17,6 @@ namespace WordZone.Models
             if (!optionsBuilder.IsConfigured)
             {
                 string dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "translations.db");
-
-                Console.WriteLine($"[DB] Używana baza danych: {dbPath}"); // Wypisuje ścieżkę w konsoli
-
                 optionsBuilder.UseSqlite($"Data Source={dbPath};");
             }
         }
@@ -30,9 +27,9 @@ namespace WordZone.Models
             //"Translations"
             modelBuilder.Entity<Translation>(entity =>
             {
-                entity.HasKey(t => t.ID); // Klucz główny
-                entity.Property(t => t.EnglishWord).HasMaxLength(100).IsRequired(); // Właściwość EnglishWord
-                entity.Property(t => t.PolishTranslation).HasMaxLength(100).IsRequired(); // Właściwość PolishTranslation
+                entity.HasKey(t => t.ID); 
+                entity.Property(t => t.EnglishWord).HasMaxLength(100).IsRequired();
+                entity.Property(t => t.PolishTranslation).HasMaxLength(100).IsRequired(); 
 
                 //Translation -> Packet
                 entity.HasOne(t => t.Packet)
@@ -43,8 +40,8 @@ namespace WordZone.Models
             // "Packet"
             modelBuilder.Entity<Packet>(entity =>
             {
-                entity.HasKey(p => p.ID); // Klucz główny
-                entity.Property(p => p.PacketName).HasMaxLength(100).IsRequired(); // Właściwość PacketName
+                entity.HasKey(p => p.ID); 
+                entity.Property(p => p.PacketName).HasMaxLength(100).IsRequired();
             });
         }
     }

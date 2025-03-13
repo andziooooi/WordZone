@@ -62,7 +62,7 @@ namespace WordZone.ViewModels
             _packetNamesList = _dataService.GetPacketsNames();
             if (packetname == "") 
             {
-                _packetName="Wybierz zbiór";
+                _packetName=_packetNamesList[0];
             }
             else
             {
@@ -74,15 +74,20 @@ namespace WordZone.ViewModels
 
         private void StartQuiz(object obj)
         {
-            if (PacketName != "Wybierz zbiór" &&PacketName !=null)
-            {
-                Dictionary = _dataService.CreateDictionary(PacketName,PolEngCB);
-                _mainWVM.CurrentViewModel = new QuizPVM(PacketName,Dictionary,_dataService, _mainWVM);
-            }
-            else
+            if (PacketName ==null)
             {
                 MessageBox.Show("Najpierw trzeba wybrać zbiór");
+                return;
             }
+            var check = _dataService.GetTranslations(PacketName);
+            if(check.Count ==0) 
+            {
+                MessageBox.Show("Brak tłumaczeń w zbiorze");
+                return;
+            }
+
+            Dictionary = _dataService.CreateDictionary(PacketName, PolEngCB);
+            _mainWVM.CurrentViewModel = new QuizPVM(PacketName, Dictionary, _dataService, _mainWVM);
         }
     }
 
