@@ -51,7 +51,7 @@
                                                 <TextBox Grid.Column="0" Width="200" HorizontalAlignment="Right" Margin="0,0,10,10" Height="30" Text="{Binding EnglishWord}" />
                                                 <TextBlock Grid.Column="1" Text="—" FontSize="15" FontWeight="Bold" Margin="0,-3,0,0"/>
                                                 <TextBox Grid.Column="2" Width="200" HorizontalAlignment="Left" Margin="10,0,0,10" Text="{Binding PolishTranslation}" />
-                                                <Button Grid.Column="2" Width="100" Margin="220,0,0,10" HorizontalAlignment="Left" Content="Usuń" Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding ID}"/>
+                                                <Button Grid.Column="2" Width="100" Margin="220,0,0,10" HorizontalAlignment="Left" Content="Usuń" Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding EnglishWord}"/>
                                             </Grid>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
 using WordZone.Services;
@@ -93,7 +92,10 @@ namespace WordZone.ViewModels
         {
             _dataService = ds;
             _packetNamesList = _dataService.GetPacketsNames();
-            _packetName = _packetNamesList[0];
+            if (_packetNamesList.Count >0)
+            {
+                _packetName = _packetNamesList.First();
+            }
             _words = new Dictionary<string, string>();
             _polEngCB = false;
             _fcValue = "";

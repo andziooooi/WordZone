@@ -108,11 +108,6 @@ namespace WordZone.Services
                 _context.SaveChanges();
             }
         }
-        public void DeleteRow(int translationID)
-        {
-            var ToRemove = _context.Translations.FirstOrDefault(item => item.ID == translationID);
-            _context.Translations.Remove(ToRemove);
-        }
         public void DeletePacket(string packetName)
         {
             var packet = _context.Packets.FirstOrDefault(item => item.PacketName == packetName);

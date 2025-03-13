@@ -84,7 +84,7 @@ namespace WordZone.ViewModels
         }
         private void BackToMenu(object obj)
         {
-            _mainWVM.CurrentViewModel = null;
+            _mainWVM.CurrentViewModel = new StartPVM();
         }
     }
 }

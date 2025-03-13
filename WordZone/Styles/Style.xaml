@@ -7,6 +7,13 @@
         <Setter Property="FontSize" Value="30" />
         <Setter Property="Margin" Value="10,0,0,10" />
     </Style>
+    <!-- Header for Start TextBlock -->
+    <Style x:Key="HeaderStartTB" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="35" />
+        <Setter Property="Margin" Value="10,0,0,10" />
+    </Style>
     <!--- SemiBolid TextBlock -->
     <Style x:Key="SemiBoldTB" TargetType="TextBlock">
         <Setter Property="TextAlignment" Value="Center"/>

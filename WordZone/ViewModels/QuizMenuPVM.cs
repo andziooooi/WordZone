@@ -62,7 +62,10 @@ namespace WordZone.ViewModels
             _packetNamesList = _dataService.GetPacketsNames();
             if (packetname == "") 
             {
-                _packetName=_packetNamesList[0];
+                if (_packetNamesList.Count >0)
+                {
+                    _packetName = _packetNamesList.First();
+                }
             }
             else
             {

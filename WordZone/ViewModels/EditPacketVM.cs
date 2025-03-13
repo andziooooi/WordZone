@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using WordZone.Commands;
@@ -65,7 +66,10 @@ namespace WordZone.ViewModels
             _dataService = ds;
 
             _packetNamesList = _dataService.GetPacketsNames();
-            _packetName = _packetNamesList[0];
+            if (_packetNamesList.Count >0) 
+            {
+                _packetName = _packetNamesList.First();
+            }
             _translations = new List<Translation>();
             TextRows = new ObservableCollection<Translation>();
             _updateVis = Visibility.Hidden;
@@ -122,10 +126,8 @@ namespace WordZone.ViewModels
         }
         private void DeleteRow(object obj)
         {
-            int translationID = Convert.ToInt32(obj);
-            //_dataService.UpdatePacket(TextRows, PacketName);
-            _dataService.DeleteRow(translationID);
-            var rowToRemove = TextRows.FirstOrDefault(t => t.ID == translationID);
+            string translation = obj.ToString();
+            var rowToRemove = TextRows.FirstOrDefault(t => t.EnglishWord == translation);
             TextRows.Remove(rowToRemove);
         }
         private void DeletePacket(object obj)

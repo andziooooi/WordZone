@@ -20,4 +20,7 @@
     <DataTemplate DataType="{x:Type vm:FlashCardsPVM}">
         <vw:FlashCards/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:StartPVM}">
+        <vw:StartPage/>
+    </DataTemplate>
 </ResourceDictionary>
